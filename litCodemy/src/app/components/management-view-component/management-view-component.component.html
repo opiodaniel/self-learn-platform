@@ -1,0 +1,166 @@
+`<div class="p-6 text-xl">🧑‍💼 Management View Loaded!</div>`
+
+
+<div class="p-6 space-y-4">
+    <div>
+      <h2 class="text-xl font-semibold text-green-800">Installation for Windows</h2>
+      <p class="bg-green-100 text-green-800 p-2 rounded border-l-4 border-green-600 mt-2">
+        Create directories under the C:\ drive as follow:
+      </p>
+      <img src="assets/windows-folders.png" alt="Folder structure" class="my-4 w-full md:w-1/2 rounded border" />
+      <p class="text-red-600 text-sm">
+        When installing every software, make sure to install it in the right directory.
+      </p>
+      <p class="bg-green-100 text-green-800 p-2 rounded border-l-4 border-green-600">
+        Install Database: postgres with pgAdmin
+      </p>
+      <a class="text-blue-700 underline" href="#">Download: PostgreSQL & PgAdmin(version:9.6.24*)</a>
+    </div>
+
+    <div class="bg-white shadow rounded-lg p-6">
+
+      <!-- Active Courses Section -->
+      <div class="mb-8">
+        <h2 class="text-xl font-bold mb-4">My Active Courses</h2>
+        <table class="w-full border-collapse border border-gray-300">
+          <thead class="bg-green-100">
+            <tr>
+              <th class="border border-gray-300 px-4 py-2">#</th>
+              <th class="border border-gray-300 px-4 py-2">Course</th>
+              <th class="border border-gray-300 px-4 py-2">Topic Count</th>
+              <th class="border border-gray-300 px-4 py-2">Progress</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">1</td>
+              <td class="border border-gray-300 px-4 py-2">
+                <!-- <a href="#" class="text-blue-500 underline">Go to FSEU 1 Jan 2021 (Uganda)</a> -->
+                <a 
+                  [routerLink]="['/management/course', 'fseu-1-jan-2021']" 
+                  class="text-blue-500 underline"
+                >
+                  Go to FSEU 1 Jan 2021 (Uganda)
+                </a>
+
+              </td>
+              <td class="border border-gray-300 px-4 py-2 text-center">20</td>
+              <td class="border border-gray-300 px-4 py-2 text-center">80%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <!-- Completed Courses Section -->
+      <div>
+        <h2 class="text-xl font-bold mb-4">My Completed Courses</h2>
+        <table class="w-full border-collapse border border-gray-300">
+          <thead class="bg-green-100">
+            <tr>
+              <th class="border border-gray-300 px-4 py-2">#</th>
+              <th class="border border-gray-300 px-4 py-2">Course</th>
+              <th class="border border-gray-300 px-4 py-2">Diploma</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-300 px-4 py-2">1</td>
+              <td class="border border-gray-300 px-4 py-2">
+                <a href="#" class="text-blue-500 underline">Go to FSEU 1 Jan 2021 (Uganda)</a>
+              </td>
+              <td class="border border-gray-300 px-4 py-2 text-center">Graduated</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+    </div>
+    
+  </div>
+
+
+  <!-- <div class="table-container">
+    <table>
+      <thead style="position: sticky;top: 0;background-color: #f2f2f2;">
+         <tr style="font-size: 1.25em;font-weight: bold;font-family: Bernard MT Condensed;position: sticky;">
+          <th style="width:400px;padding: 15px;border-top-left-radius:10px;position: sticky;">Name</th>
+          <th style="width:125px;position: sticky;">Fitness</th>
+          <th style="width:125px;position: sticky;">Shooting</th>
+          <th style="width:125px;position: sticky;">Equipment</th>
+          <th style="width:125px;border-top-right-radius:10px;position: sticky;">Prof. Fit</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <td soldier_id="4842" style="padding:10px;width:400px">
+              <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112001</span><br>
+              <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Kyungu Wabanza Adolph</span></td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#d55d5d">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;34&nbsp;<img src="/media/training/images/x.png" width="25" height="25">
+              </div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;70&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:white">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;0&nbsp;</div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#d55d5d">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;33&nbsp;<img src="/media/training/images/x.png" width="25" height="25"></div>
+          </td>
+      </tr>
+      <tr>
+          <td soldier_id="4883" style="padding:10px;width:400px">
+              <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112042</span><br>
+              <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Abanga Bosali Glody</span></td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;84&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;87&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+      </tr>
+      <tr><td soldier_id="4884" style="padding:10px;width:400px">
+          <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112043</span><br>
+          <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Otapanya Manya</span>
+      </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;80&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;77&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+      </tr>
+      <tr>
+          <td soldier_id="4933" style="padding:10px;width:400px">
+              <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112092</span><br>
+              <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Bamuseke Kabamusu</span>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;74&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;90&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:white">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;0&nbsp;</div>
+          </td>
+          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#d55d5d">
+              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;67&nbsp;<img src="/media/training/images/x.png" width="25" height="25"></div>
+          </td>
+      </tr>
+      </tbody>
+    </table>
+  </div> -->

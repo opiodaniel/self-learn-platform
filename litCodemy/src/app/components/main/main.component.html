@@ -1,0 +1,204 @@
+<div class="min-h-screen w-full bg-gradient-to-b from-white to-green-50 overflow-hidden">
+    <!-- ✅ Navbar -->
+    <div class="px-6 max-w-7xl mx-auto py-4 flex justify-between items-center border-b border-green-200">
+      <!-- Left: Logo + Search -->
+      <div class="flex items-center gap-4">
+        <img src="assets/logo.svg" alt="Logo" class="h-10" />
+        <div class="hidden md:block">
+          <input
+            type="text"
+            placeholder="Search courses..."
+            class="px-4 py-2 w-64 rounded-full border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+        </div>
+      </div>     
+  
+      <!-- Right: Auth Options -->
+      <div class="flex items-center gap-4">
+        <!-- ✅ IF LOGGED IN -->
+        <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">
+        <div *ngIf="isLoggedIn; else guestLinks" class="relative" (click)="toggleDropdown()" tabindex="0" (blur)="closeDropdown()">
+
+         <div class="relative group">    
+
+          <button class="flex items-center gap-2 text-green-900 font-semibold hover:text-green-700 focus:outline-none">            
+            <!-- <img src="assets/user-avatar.png" alt="User" class="w-10 h-10 rounded-full border-2 border-green-500" /> -->
+            <img [src]="profilePictureUrl" alt="User Avatar" class="w-10 h-10 rounded-full cursor-pointer border-2 border-green-600"/>
+
+            <span class="hidden sm:inline">Hello, User</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                 viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+  
+          <!-- ✅ Dropdown -->
+          <div 
+            class="absolute left-5 top-full w-48 bg-white rounded-lg shadow-xl py-2 hidden group-hover:block z-50 text-white border border-green-700">
+            <a [routerLink]="['/dashboard']" class="block px-4 py-2 text-sm text-green-800 hover:bg-green-100">My Account</a>
+            <!-- <a href="#" class="block px-4 py-2 text-sm text-green-800 hover:bg-green-100">Settings</a> -->
+            <a (click)="authService.logout()" class="block px-4 py-2 text-sm text-green-800 hover:bg-green-100 border-t border-green-200 cursor-pointer">Logout</a>
+          </div>
+        </div>  
+
+        </div>
+        </ng-container>
+  
+        <!-- ✅ IF NOT LOGGED IN -->
+        <ng-template #guestLinks>
+          <a href="/login" class="text-green-700 font-semibold hover:underline">Login</a>
+          <a
+            href="/register"
+            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full font-medium"
+          >
+            Register
+          </a>
+        </ng-template>
+
+      </div>
+    </div>
+
+  
+    <!-- ✅ Hero Section -->
+    <div class="px-6 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8 py-10">
+      <div class="flex-1 space-y-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-green-900 leading-tight">
+          Maximize skill, minimize budget
+        </h1>
+        <p class="text-green-800 text-lg">
+          Our modern courses across in-demand skills will give you the knowledge to shape your future.
+        </p>
+        <button class="bg-gradient-to-r from-green-600 to-green-400 text-white px-8 py-3 rounded-3xl font-semibold">
+          Start Learning
+        </button>
+      </div>
+      <div class="flex-1 hidden md:block">
+        <img src="assets/hero-image.jpeg" alt="Hero" class="max-w-md rounded-xl shadow-lg" />
+      </div>
+    </div>
+  
+
+
+       <!-- ✅ Enhanced Courses Grid -->
+  <div class="px-6 max-w-7xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-12 mb-20">
+    <div
+      *ngFor="let course of courses"
+      class="group bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all relative overflow-hidden border border-green-200"
+    >
+      <!-- Decorative Blob Background -->
+      <div
+        class="absolute -top-10 -right-10 w-36 h-36 bg-green-200 opacity-20 rounded-full group-hover:scale-110 transition-transform duration-300"
+      ></div>
+
+      <!-- Icon -->
+      <div class="relative z-10">
+        <img [src]="course.icon" alt="icon" class="w-100 object-contain mx-auto mb-4 rounded-xl bg-white p-2 shadow-sm" />
+      </div>
+
+      <!-- Course Info -->
+      <div class="relative z-10 text-center">
+        <h3 class="font-extrabold text-lg text-green-900 group-hover:text-green-800 transition-colors">{{ course.title }}</h3>
+        <p class="text-green-700 text-sm mt-2 mb-4">{{ course.desc }}</p>
+        <button
+          class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition-all"
+        >
+          Start Learning
+        </button>
+      </div>
+
+      <!-- Decorative Bottom Curve -->
+      <svg
+        class="absolute bottom-0 left-0 w-full h-10 text-green-300 opacity-30"
+        viewBox="0 0 1440 320"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill="currentColor"
+          d="M0,160L60,154.7C120,149,240,139,360,144C480,149,600,171,720,165.3C840,160,960,128,1080,128C1200,128,1320,160,1380,176L1440,192V320H1380C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320H0V160Z"
+        />
+      </svg>
+    </div>
+  </div>
+
+    <!-- ✅ Courses Grid -->
+    <!-- <div class="px-6 max-w-7xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 mb-16">
+      <div
+        *ngFor="let course of courses"
+        class="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 relative overflow-hidden group"
+      > -->
+        <!-- 🔖 Badge (New / Popular) -->
+        <!-- <span *ngIf="course.isNew" class="absolute top-4 right-4 bg-green-500 text-white text-xs px-2 py-1 rounded-full z-10">New</span> -->
+        
+        <!-- 🏷️ Category Tag -->
+        <!-- <span class="text-xs font-semibold text-green-600 border border-green-500 px-2 py-0.5 rounded">{{ course.category }}</span> -->
+
+        <!-- 🖼️ Course Icon -->
+        <!-- <img [src]="course.icon" alt="icon" class="w-10 h-10 my-3" /> -->
+
+        <!-- 📝 Title & Description -->
+        <!-- <h3 class="font-bold text-lg text-green-900">{{ course.title }}</h3>
+        <p class="text-green-800 text-sm mt-2 mb-3 line-clamp-2">{{ course.desc }}</p> -->
+
+        <!-- ⭐ Star Rating -->
+        <!-- <div class="flex items-center mt-1 mb-3 text-yellow-400 text-sm">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+          <span class="ml-1 text-green-600 text-xs">(4.0)</span>
+        </div> -->
+
+        <!-- 📊 Progress Bar (if enrolled) -->
+        <!-- <div *ngIf="course.progress" class="mb-3">
+          <div class="w-full bg-gray-200 rounded-full h-1.5">
+            <div [style.width.%]="course.progress" class="bg-green-500 h-1.5 rounded-full"></div>
+          </div>
+          <span class="text-xs text-green-700 mt-1">{{ course.progress }}% Complete</span>
+        </div> -->
+
+        <!-- 🚀 Hover Button -->
+        <!-- <button class="mt-2 text-green-600 font-bold hover:text-green-800 transition-colors relative z-10">
+          {{ course.progress ? 'Continue' : 'Get Started' }}
+        </button> -->
+
+        <!-- 💡 Hover Background Overlay -->
+        <!-- <div class="absolute inset-0 bg-gradient-to-br from-green-50 via-transparent to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+      </div>
+    </div> -->
+
+
+    <footer class="relative mt-auto overflow-hidden">
+        <!-- Wave Top (in and out curve) -->
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none z-[-1]">
+          <svg viewBox="0 0 1440 100" class="w-full h-24" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#14532d" fill-opacity="1"
+              d="M0,64 C360,0 1080,128 1440,64 L1440,0 L0,0 Z">
+            </path>
+          </svg>
+        </div>
+
+        <!-- Footer Content -->
+        <div class="bg-gradient-to-br from-green-800 to-green-900 text-white pt-16 pb-6 px-6 rounded-t-3xl shadow-inner z-10 relative">
+          <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-center md:text-left mb-4 md:mb-0">
+              <div class="text-lg font-bold">Codemy <span class="text-yellow-400">Qirk</span></div>
+              <p class="text-sm text-green-200">Empowering minds through structured learning.</p>
+            </div>
+            <div class="flex space-x-6 text-sm">
+              <a routerLink="/about" class="hover:underline hover:text-green-300">About</a>
+              <a routerLink="/contact" class="hover:underline hover:text-green-300">Contact</a>
+              <a routerLink="/privacy" class="hover:underline hover:text-green-300">Privacy</a>
+            </div>
+          </div>
+
+          <div class="mt-6 text-center text-xs text-green-400">
+            © 2025 Codemy <span class="text-yellow-400">Qirk</span>. All rights reserved.
+          </div>
+        </div>
+    </footer>
+
+  </div>
+  
+  
+  
+  
+  
+  

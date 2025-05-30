@@ -1,0 +1,18 @@
+// ========== Using ==========
+
+.subsection-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .subsection-container[hidden] {
+    display: block !important; // override [hidden]
+    max-height: 0;
+  }
+  .subsection-container:not([hidden]) {
+    max-height: 500px; /* Adjust based on your content */
+    transition: max-height 0.35s ease-in;
+  }
+  
+  // ==================================

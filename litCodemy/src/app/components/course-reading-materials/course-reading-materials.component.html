@@ -1,0 +1,221 @@
+<!-- <div class="p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Student Dashboard</h1>
+   -->
+    <!-- Enrolled Courses -->
+    <!-- <div class="mb-10">
+      <h2 class="text-xl font-semibold mb-4">Enrolled Courses</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <ng-container *ngFor="let course of enrolledCourses">
+          <div class="bg-white p-4 rounded-xl shadow border hover:shadow-md transition">
+            <h3 class="text-lg font-bold">{{ course.title }}</h3>
+            <p class="text-sm text-gray-600">{{ course.description }}</p>
+            <a [routerLink]="['/course-details', course.id]" class="text-blue-600 text-sm mt-2 inline-block">View Topics</a>
+          </div>
+        </ng-container>
+      </div>
+    </div> -->
+  
+    <!-- All Courses (Enroll Option) -->
+    <!-- <div>
+      <h2 class="text-xl font-semibold mb-4">Available Courses</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <ng-container *ngFor="let course of allCourses">
+          <div class="bg-gray-50 p-4 rounded-xl shadow hover:shadow-md border transition">
+            <h3 class="text-lg font-bold">{{ course.courseTitle }}</h3>
+            <p class="text-sm text-gray-700 mb-2">{{ course.courseDescription }}</p>
+        
+            <button *ngIf="!isEnrolled(course.courseId)" 
+                    (click)="enroll(course.courseId)"
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm">
+              Enroll
+            </button>        
+            <button *ngIf="isEnrolled(course.courseId)"
+                    class="bg-gray-400 text-white px-4 py-2 rounded-lg text-sm cursor-not-allowed"
+                    disabled>
+              Enrolled
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+</div>
+   -->
+<!-- This is the start of the Angular version of the provided React + Tailwind travel admin dashboard -->
+
+<!-- Assumptions: 
+1. Data (navitem, cardinfo, historydata, tophotel, options2) will be stored in a TypeScript component.
+2. Component is named travel-admin-dashboard.component.ts and corresponds to this HTML.
+3. Highcharts Angular wrapper is installed.
+4. Responsive & design fidelity with Tailwind preserved.
+-->
+
+
+
+
+<div class="flex h-screen bg-green-50 text-gray-800">
+    <!-- Toggle Button -->
+    <button 
+      (click)="toggleSidebar()" 
+      class="fixed top-3 left-2 z-50 p-2  rounded-md bg-green-900 text-white md:hidden shadow-lg"
+    >
+      <!-- Conditional Icon: Hamburger or Arrow -->
+      <svg *ngIf="sidebarOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+      <svg *ngIf="!sidebarOpen" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  
+    <!-- Sidebar -->
+    <aside 
+      [ngClass]="{ 'w-64': sidebarOpen, 'w-0': !sidebarOpen }" 
+      class="h-full md:h-screen transition-all duration-300 bg-green-900 text-white overflow-hidden flex flex-col fixed inset-y-0 left-0 z-40 md:relative md:w-64 md:z-auto"
+    >
+      <!-- Sidebar Content... -->
+      <div class="p-4 text-center border-b border-green-700"> 
+        <div class="text-2xl font-bold">Codemy<span class="text-yellow-400 px-1 rounded">Qirk</span></div>
+        <div class="text-sm">Lit-Codemy</div>
+      </div>
+      <div class="flex-1 overflow-auto">
+        <div class="p-4">
+          <div class="mb-4">
+            <img src="assets/python.jpeg" alt="Course Banner" class="w-full rounded-lg" />
+          </div>
+          <button class="bg-green-700 text-white px-3 py-1 mb-2 rounded w-full">Add Section</button>
+  
+          <div class="space-y-2">
+            <div *ngFor="let section of sections" class="bg-green-800 rounded">
+                <div 
+                  (click)="toggleSection(section.id)" 
+                  class="flex justify-between items-center cursor-pointer px-2 py-2 rounded"
+                  [ngClass]="{
+                    'bg-green-700 text-white': section.id === activeSectionId,
+                    'hover:bg-green-700 text-green-200': section.id !== activeSectionId
+                  }"
+                >
+                  <span class="font-semibold">{{ section.title }}</span>
+                  <span class="text-xs bg-green-600 px-2 py-0.5 rounded-full">{{ section.id }}</span>
+                </div>
+  
+              
+              <div 
+                class="subsection-container"
+                [hidden]="!section.expanded"
+                 >  
+                <div 
+                    *ngFor="let sub of section.subsections" 
+                    (click)="selectSubsection(section.id, sub)" 
+                    class="text-sm cursor-pointer px-2 py-1 rounded mt-2"
+                    [ngClass]="{
+                      'bg-green-600 text-white font-semibold': 
+                        selectedSubsection?.subsection.id === sub.id && 
+                        selectedSubsection?.sectionId === section.id,
+                      'text-green-100 hover:text-white': 
+                        selectedSubsection?.subsection.id !== sub.id || 
+                        selectedSubsection?.sectionId !== section.id
+                    }"
+                  >
+                    {{ sub.id }}. {{ sub.title }}
+                </div>
+  
+              </div>
+            </div>
+          </div>
+  
+          <button class="bg-green-700 text-white px-3 py-1 mt-4 rounded w-full">Edit test questions</button>
+        </div>
+      </div>
+  
+      <!-- User Profile Dropdown (Click to Toggle) -->
+      <div class="border-t border-green-700 p-4 mt-auto relative">
+        <div class="flex items-center justify-between cursor-pointer" (click)="toggleDropdown()">
+          <div class="flex items-center space-x-2">
+            <!-- <img src="assets/user-avatar.png" alt="User" class="w-10 h-10 rounded-full border-2 border-white" /> -->
+            <img [src]="profilePictureUrl" alt="User Avatar" class="w-10 h-10 rounded-full cursor-pointer border-2 border-green-600"/>
+            <div>
+              <div class="font-semibold text-sm">John Doe</div>
+              <div class="text-xs text-green-300">Instructor</div>
+            </div>
+          </div>
+          <svg
+            class="w-4 h-4 text-green-300 transition-transform duration-300"
+            [ngClass]="{ 'rotate-180': dropdownOpen }"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+  
+        <!-- Dropdown Menu -->
+        <div
+          *ngIf="dropdownOpen"
+          class="absolute bottom-20 left-4 w-48 bg-green-800 rounded shadow-lg transition-opacity duration-300 z-50"
+        >
+          <a href="#" class="block px-4 py-2 text-sm hover:bg-green-700">Profile</a>
+          <a href="#" class="block px-4 py-2 text-sm hover:bg-green-700">Settings</a>
+          <a (click)="authService.logout()" class="cursor-pointer block px-4 py-2 text-sm text-red-300 hover:text-red-100 hover:bg-green-700">Logout</a>
+        </div>
+      </div>
+  
+  
+    </aside>
+  
+    <!-- Overlay (shown when sidebar is open on mobile) -->
+    <div 
+      *ngIf="sidebarOpen && isMobile()"
+      (click)="toggleSidebar()" 
+      class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden backdrop-blur-sm transition-opacity"
+    >
+    </div>
+  
+    <!-- Main Content -->
+    <main class="flex-1 overflow-auto relative z-10">
+  
+  
+      <header class="flex justify-between items-center p-4 bg-white border-b border-green-300">
+        <div class="text-lg ml-5 mt-10 font-semibold text-green-900 mr-100">Framework for software engineering</div>
+        <div class="flex items-center space-x-2">
+          <button [routerLink]="['/dashboard']" class="bg-green-500 text-white px-3 py-1 rounded hidden md:inline">My Dashboard</button>
+          <button class="border border-green-500 text-green-700 px-3 py-1 rounded hidden md:inline">Refresh Student's Screen</button>
+          <button [routerLink]="['/']"  class="bg-yellow-400 px-3 py-1 rounded md:inline">Home</button>
+        </div>      
+      </header>
+  
+      <div class="p-6 space-y-4">
+        <div>
+          <h2 class="text-xl font-semibold text-green-800">Installation for Windows</h2>
+          <p class="bg-green-100 text-green-800 p-2 rounded border-l-4 border-green-600 mt-2">
+            Create directories under the C:\ drive as follow:
+          </p>
+          <img src="assets/windows-folders.png" alt="Folder structure" class="my-4 w-full md:w-1/2 rounded border" />
+          <p class="text-red-600 text-sm">
+            When installing every software, make sure to install it in the right directory.
+          </p>
+          <p class="bg-green-100 text-green-800 p-2 rounded border-l-4 border-green-600">
+            Install Database: postgres with pgAdmin
+          </p>
+          <a class="text-blue-700 underline" href="#">Download: PostgreSQL & PgAdmin(version:9.6.24*)</a>
+        </div>
+  
+        <h2 class="text-xl font-semibold text-green-800 mb-2">
+          {{ selectedSubsection?.subsection?.title || 'No subsection selected' }}
+        </h2>
+        <p class="text-gray-700 whitespace-pre-line">
+          {{ displayedContent }}
+        </p>
+      </div>
+      
+    </main>
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  

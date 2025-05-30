@@ -1,0 +1,63 @@
+   <!-- Sidebar -->
+<aside
+   [ngClass]="{ 'w-64': sidebarOpen, 'w-0': !sidebarOpen }"
+   class="h-full md:h-screen transition-all duration-300 bg-green-900 text-white overflow-hidden flex flex-col fixed inset-y-0 left-0 z-40 md:relative md:w-64 md:z-auto"
+   >
+
+  <!-- Sidebar Content... -->
+  <div class="p-4 text-center border-b border-green-700"> 
+    <div class="text-2xl font-bold">Codemy<span class="text-yellow-400 px-1 rounded">Qirk</span></div>
+    <div class="text-sm">Lit-Codemy</div>
+  </div>
+   <!-- User Profile -->
+   <div class="flex flex-col items-center p-6">
+     <img [src]="profilePictureUrl" alt="User Avatar" class="w-20 h-20 rounded-full border-4 border-green-700 mb-2" />
+     <div class="text-white font-semibold text-lg">Opio Daniel</div>
+     <div class="text-green-300 text-sm">Student</div>
+   </div>
+   
+   <!-- Navigation Items -->
+   <nav class="flex-1 px-4 space-y-4">
+     <a routerLink="/dashboard" routerLinkActive="text-white font-bold" class="cursor-pointer block text-green-200 font-semibold text-lg hover:text-green-200">Dashboard</a>
+     <a routerLink="management" routerLinkActive="text-white font-bold" class="cursor-pointer block text-green-200 hover:text-green-200">Management</a>
+
+   
+     <!-- Profile Dropdown -->
+     <div>
+       <div (click)="toggleDropdown()" class="flex justify-between items-center cursor-pointer text-green-200 hover:text-white">
+         <span routerLinkActive="text-white font-bold" class="text-white-400 font-bold">Profile</span>
+         <svg
+           class="w-4 h-4 transition-transform duration-300"
+           [ngClass]="{ 'rotate-180': dropdownOpen }"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2"
+           viewBox="0 0 24 24"
+         >
+           <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+         </svg>
+       </div>
+   
+       <!-- Profile Tabs -->
+       <div *ngIf="dropdownOpen" class="ml-4 mt-2 space-y-2">
+         <!-- <a href="#" class="block text-sm text-green-100 hover:text-white">Update Profile</a>
+         <a href="#" class="block text-sm text-green-100 hover:text-white">Update Password</a> -->
+         <!-- Inside the profile dropdown -->
+        <a [routerLink]="['update-profile']" routerLinkActive="text-white font-bold" class="block text-sm text-green-100 hover:text-white">Update Profile</a>
+        <a [routerLink]="['update-password']" routerLinkActive="text-white font-bold" class="block text-sm text-green-100 hover:text-white">Update Password</a>
+       </div>
+     </div>
+   
+     <a href="#" class="block text-green-200 hover:text-white">My Actions</a>
+   </nav>
+   
+   <!-- Logout at Bottom -->
+   <div class="p-4 mt-auto border-t border-green-700">
+     <button
+       (click)="authService.logout()"
+       class="w-full text-left text-red-300 hover:text-red-100 hover:bg-green-800 px-4 py-2 rounded"
+     >
+       Logout
+     </button>
+   </div>
+</aside>

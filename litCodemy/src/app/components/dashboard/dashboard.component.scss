@@ -1,0 +1,57 @@
+// ========== Using ==========
+
+.subsection-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .subsection-container[hidden] {
+    display: block !important; // override [hidden]
+    max-height: 0;
+  }
+  .subsection-container:not([hidden]) {
+    max-height: 500px; /* Adjust based on your content */
+    transition: max-height 0.35s ease-in;
+  }
+  
+  // ==================================
+  
+  
+  /* Smooth slide effect for tabs */
+  .slide-enter {
+    height: 0;
+    opacity: 0;
+  }
+  
+  .slide-enter-active {
+    height: 44px;
+    opacity: 1;
+    transition: all 0.3s ease-in;
+  }
+  
+  .slide-leave {
+    height: 44px;
+    opacity: 1;
+  }
+  
+  .slide-leave-active {
+    height: 0;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+  }
+  
+  
+  
+  table {
+    border: 1px solid #e5e7eb;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+  }
+  
+  a:hover {
+    color: #10b981; /* green-500 */
+  }
