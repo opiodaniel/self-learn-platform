@@ -1,0 +1,17 @@
+/* Responsive Padding */
+.md\:px-24 {
+    @apply px-24;
+  }
+  
+  /* Course Image */
+  img {
+    max-height: 300px;
+    object-fit: cover;
+  }
+  
+  /* List Disc */
+  .list-disc {
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
