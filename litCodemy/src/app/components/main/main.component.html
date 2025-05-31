@@ -35,7 +35,7 @@
           <!-- ✅ Dropdown -->
           <div 
             class="absolute left-5 top-full w-48 bg-white rounded-lg shadow-xl py-2 hidden group-hover:block z-50 text-white border border-green-700">
-            <a [routerLink]="['/dashboard']" class="block px-4 py-2 text-sm text-green-800 hover:bg-green-100">My Account</a>
+            <a [routerLink]="['/dashboard/dashboard-content']" class="block px-4 py-2 text-sm text-green-800 hover:bg-green-100">My Account</a>
             <!-- <a href="#" class="block px-4 py-2 text-sm text-green-800 hover:bg-green-100">Settings</a> -->
             <a (click)="authService.logout()" class="block px-4 py-2 text-sm text-green-800 hover:bg-green-100 border-t border-green-200 cursor-pointer">Logout</a>
           </div>
@@ -68,7 +68,7 @@
         <p class="text-green-800 text-lg">
           Our modern courses across in-demand skills will give you the knowledge to shape your future.
         </p>
-        <button class="bg-gradient-to-r from-green-600 to-green-400 text-white px-8 py-3 rounded-3xl font-semibold">
+        <button routerLink = "/dashboard/dashboard-content" class="bg-gradient-to-r from-green-600 to-green-400 text-white px-8 py-3 rounded-3xl font-semibold">
           Start Learning
         </button>
       </div>
@@ -100,9 +100,10 @@
         <h3 class="font-extrabold text-lg text-green-900 group-hover:text-green-800 transition-colors">{{ course.title }}</h3>
         <p class="text-green-700 text-sm mt-2 mb-4">{{ course.desc }}</p>
         <button
+          routerLink = "register-to-course"
           class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition-all"
         >
-          Start Learning
+          Get Started
         </button>
       </div>
 
