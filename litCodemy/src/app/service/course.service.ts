@@ -4,14 +4,9 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
-  private baseUrl = 'http://localhost:8000/api/v1/courses';
+  private baseUrl = 'http://localhost:8000/api/course/create'; 
 
   constructor(private http: HttpClient) {}
-
-  // createCourse(courseData: any): Observable<any> {
-  //   const headers = this.getAuthHeaders();
-  //   return this.http.post(`${this.baseUrl}`, courseData, { headers });
-  // }
 
   createCourse(courseData: FormData): Observable<any> {
     const headers = this.getAuthHeaders(); // DO NOT set Content-Type here
@@ -21,8 +16,8 @@ export class CourseService {
   
 
   getAllCourses(): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.baseUrl}`, { headers });
+    //const headers = this.getAuthHeaders();
+    return this.http.get(`${this.baseUrl}`);
   }
 
   getCourseById(courseId: number): Observable<any> {
@@ -33,7 +28,7 @@ export class CourseService {
 
   private getAuthHeaders(): HttpHeaders {
     //console.log("localStorage: ", localStorage)
-    const token = localStorage.getItem('token'); 
+    const token = localStorage.getItem('authToken'); 
     //console.log("TOKEN: ", token)
     return new HttpHeaders({
       //'Content-Type': 'application/json',

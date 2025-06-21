@@ -10,19 +10,34 @@ import { UserService } from './user.service';
 })
 export class AuthService {
 
-  private baseUrl = 'http://localhost:8000/api/v1/auth';
+  private baseUrl = 'http://localhost:8000/api/v1/';
   private tokenKey = 'authToken';
   private tokenExpiryTimeout: any;
 
   constructor(private http: HttpClient, private router: Router, public userService: UserService,) {}
 
   /** Call this from LoginComponent */
-  loginUser(credentials: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/login`, credentials)
+  // loginUser(credentials: any): Observable<any> {
+  //   return this.http.post<any>(`${this.baseUrl}/login`, credentials)
+  // }
+
+  loginUser(credentials: { email: string; password: string }): Observable<any> {
+    const payload = {
+      SERVICE: 'Auth',
+      ACTION: 'login',
+      data: credentials
+    };
+    return this.http.post<any>(`${this.baseUrl}`, payload);
   }
+  
 
   register(userData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/register`, userData);
+    const payload = {
+      SERVICE: 'Auth',
+      ACTION: 'register',
+      data: userData
+    }
+    return this.http.post<any>(`${this.baseUrl}`, payload);
   }
 
   login(token: string) {
@@ -42,6 +57,25 @@ export class AuthService {
     this.startTokenWatcher();
     return !!localStorage.getItem(this.tokenKey);
   }
+
+  getCurrentUser(): { username: string, role: string, imageUrl?: string } | null {
+    const token = localStorage.getItem(this.tokenKey);
+    if (!token) return null;
+  
+    try {
+      const decoded: any = jwtDecode(token);
+      return {
+        username: decoded.sub || decoded.username || '',
+        role: decoded.role || '',
+        imageUrl: decoded.imageUrl || ''
+      };
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return null;
+    }
+  }
+  
+  
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);

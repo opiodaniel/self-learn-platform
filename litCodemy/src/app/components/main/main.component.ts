@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { Course, CourseResponseDTO } from '../../model/course-response-dto';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-main',
@@ -19,11 +20,13 @@ export class MainComponent implements OnInit {
   isLoggedIn = false;
   dropdownOpen = false;
   profilePictureUrl: string = '';
+  welcomeMessage: string | null = null;
 
   constructor(
     public authService: AuthService,
     public router: Router,
     public userService: UserService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +38,16 @@ export class MainComponent implements OnInit {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
+
+    this.messageService.message$.subscribe(msg => {
+      this.welcomeMessage = msg;
+      
+      // Optional: clear message after a few seconds
+      if (msg) {
+        setTimeout(() => this.messageService.clearMessage(), 5000);
+      }
+    });
+
   }
     
 

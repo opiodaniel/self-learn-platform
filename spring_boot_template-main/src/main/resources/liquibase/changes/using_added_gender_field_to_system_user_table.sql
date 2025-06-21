@@ -1,0 +1,1 @@
+ALTER TABLE system_user ADD COLUMN gender_pronoun VARCHAR(16);

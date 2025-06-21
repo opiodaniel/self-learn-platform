@@ -13,93 +13,51 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-
-  
-  isNavOpen = false;
-  isLoggedIn = false;
-  profilePictureUrl: string = '';
-
-
-  constructor(
-      public authService: AuthService,
-      public router: Router,
-      public userService: UserService,
-  ) {} 
-
   @Input() sidebarOpen: boolean = true;
 
+  isNavOpen = false;
+  isLoggedIn = false;
   dropdownOpen: boolean = true;
+
+  profilePictureUrl: string = '';
+  userName: string = '';
+  userRole: string = '';
+
+  constructor(
+    public authService: AuthService,
+    public router: Router,
+    public userService: UserService
+  ) {}
+
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      //console.log(user)
+      this.userName = user.username;
+      this.userRole = user.role;
+      this.profilePictureUrl = user.imageUrl || this.getDefaultProfilePicture();
+    }
+  }
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
 
-  toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
+
+  getDefaultProfilePicture(): string {
+    const id = Math.floor(Math.random() * 70) + 1;
+    return `https://i.pravatar.cc/150?img=${id}`;
   }
 
-
-  isMobile(): boolean {
-    return window.innerWidth < 768; // md breakpoint in Tailwind
+  logout() {
+    this.authService.logout();
   }
-
-
-  ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
-    this.userService.getProfilePictureUrl().subscribe(url => {
-      this.profilePictureUrl = url;
-    });
-
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-    }
-  }
-    
-
-  closeDropdown() {
-    setTimeout(() => {
-      this.dropdownOpen = false;
-    }, 150);
-  }
-
-
-  // Generate random avatar ID for default profile image
-  randomUserImageId(): number {
-    return Math.floor(Math.random() * 70) + 1; // Random ID between 1 and 70
-  }  
-
-
-  showProfileTabs = false;
-  activeTab: string | null = null;
-
-  toggleProfileTabs() {
-    this.showProfileTabs = !this.showProfileTabs;
-    if (!this.showProfileTabs) {
-      this.activeTab = null; // Reset active tab on collapse
-    }
-  }
-
-  setActiveTab(tab: string) {
-    this.activeTab = tab;
-  }
-
-  // Dummy user data
-  user = {
-    name: 'John Doe',
-    role: 'Instructor'
-  };
-
-  showManagementView = false;
-
-  activeCourses = [
-    { name: 'Intro to Programming', progress: 40, totalTopics: 10 },
-    { name: 'Database Systems', progress: 75, totalTopics: 12 },
-  ];
-
-  completedCourses = [
-    { name: 'FSEU 1 Jan 2021 (Uganda)', status: 'Not Graduated Yet.' },
-  ];
-
-
 }

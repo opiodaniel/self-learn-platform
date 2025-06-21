@@ -1,4 +1,4 @@
-   <!-- Sidebar -->
+<!-- Sidebar -->
 <aside
    [ngClass]="{ 'w-64': sidebarOpen, 'w-0': !sidebarOpen }"
    class="h-full md:h-screen transition-all duration-300 bg-green-900 text-white overflow-hidden flex flex-col fixed inset-y-0 left-0 z-40 md:relative md:w-64 md:z-auto"
@@ -12,8 +12,8 @@
    <!-- User Profile -->
    <div class="flex flex-col items-center p-6">
      <img [src]="profilePictureUrl" alt="User Avatar" class="w-20 h-20 rounded-full border-4 border-green-700 mb-2" />
-     <div class="text-white font-semibold text-lg">Opio Daniel</div>
-     <div class="text-green-300 text-sm">Student</div>
+     <div class="text-white font-semibold text-lg">{{ userName }}</div>
+     <div class="text-green-300 text-sm">{{ userRole }}</div>
    </div>
    
    <!-- Navigation Items -->

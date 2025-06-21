@@ -1,7 +1,45 @@
-`<div class="p-6 text-xl">🧑‍💼 Management View Loaded!</div>`
-
-
 <div class="p-6 space-y-4">
+
+  <p class="text-xl" >🧑‍💼 Management View Loaded!</p>
+
+  <div class=" mx-auto p-6 bg-white rounded shadow">
+    <!-- Tab Header -->
+    <div class="flex border-b border-gray-300 mb-6">
+      <button
+        class="px-4 py-2 text-sm font-medium"
+        [ngClass]="{ 'border-b-2 border-green-600 text-green-600': activeTab === 'course' }"
+        (click)="setTab('course')"
+      >
+        Course
+      </button>
+      <button
+        class="px-4 py-2 text-sm font-medium"
+        [ngClass]="{ 'border-b-2 border-green-600 text-green-600': activeTab === 'topic' }"
+        (click)="setTab('topic')"
+      >
+        Topic
+      </button>
+      <button
+        class="px-4 py-2 text-sm font-medium"
+        [ngClass]="{ 'border-b-2 border-green-600 text-green-600': activeTab === 'subtopic' }"
+        (click)="setTab('subtopic')"
+      >
+        Subtopic
+      </button>
+    </div>
+  
+    <!-- Tab Content -->
+    <div *ngIf="activeTab === 'course'">
+      <app-create-course></app-create-course>
+    </div>
+    <div *ngIf="activeTab === 'topic'">
+      <app-create-topic></app-create-topic>
+    </div>
+    <div *ngIf="activeTab === 'subtopic'">
+      <app-create-subtopic></app-create-subtopic>
+    </div>
+  </div>
+
     <div>
       <h2 class="text-xl font-semibold text-green-800">Installation for Windows</h2>
       <p class="bg-green-100 text-green-800 p-2 rounded border-l-4 border-green-600 mt-2">
@@ -76,7 +114,7 @@
     
     </div>
     
-  </div>
+</div>
 
 
   <!-- <div class="table-container">

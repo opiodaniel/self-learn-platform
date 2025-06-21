@@ -3,7 +3,10 @@
     <div class="px-6 max-w-7xl mx-auto py-4 flex justify-between items-center border-b border-green-200">
       <!-- Left: Logo + Search -->
       <div class="flex items-center gap-4">
-        <img src="assets/logo.svg" alt="Logo" class="h-10" />
+        <!-- <img src="assets/logo.svg" alt="Logo" class="h-10" /> -->
+        <div class="">
+          <div class="text-lg font-bold">Codemy <span class="text-yellow-400">Qirk</span></div>
+        </div>
         <div class="hidden md:block">
           <input
             type="text"
@@ -11,6 +14,10 @@
             class="px-4 py-2 w-64 rounded-full border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-400"
           />
         </div>
+        <div *ngIf="welcomeMessage" class="bg-green-100 text-green-800 p-3 rounded-md mb-4 shadow text-lg font-medium flex items-center gap-2">
+          <span class="animate-wave text-xl">👋</span>
+          <span>{{ welcomeMessage }}</span>
+        </div>              
       </div>     
   
       <!-- Right: Auth Options -->
@@ -25,7 +32,8 @@
             <!-- <img src="assets/user-avatar.png" alt="User" class="w-10 h-10 rounded-full border-2 border-green-500" /> -->
             <img [src]="profilePictureUrl" alt="User Avatar" class="w-10 h-10 rounded-full cursor-pointer border-2 border-green-600"/>
 
-            <span class="hidden sm:inline">Hello, User</span>
+            <span class="hidden sm:inline">Hello, User</span>          
+            
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                  viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
