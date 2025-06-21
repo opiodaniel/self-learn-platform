@@ -53,6 +53,26 @@ public class CourseService extends BaseWebActionsService {
         return courseRepository.save(course);
     }
 
+    // Publish and Unpublish the course. //
+    public OperationReturnObject publishCourse(JSONObject request) {
+        OperationReturnObject returnObject = new OperationReturnObject();
+        try {
+            Long courseId = request.getLong("courseId");
+
+            Course course = courseRepository.findById(courseId)
+                    .orElseThrow(() -> new RuntimeException("Course not found"));
+
+            course.setPublished(true);
+            courseRepository.save(course);
+
+            returnObject.setCodeAndMessageAndReturnObject(200, "Course published successfully", course);
+
+        } catch (Exception e) {
+            returnObject.setReturnCodeAndReturnMessage(400, "Failed to publish course");
+        }
+        return returnObject;
+    }
+
 
     public Course updateCourse(CourseCreateRequest request) {
         requiresAuth();
@@ -172,6 +192,8 @@ public class CourseService extends BaseWebActionsService {
                 courseJson.put("title", course.getTitle());
                 courseJson.put("description", course.getDescription());
                 courseJson.put("courseImg", course.getImageUrl());
+                courseJson.put("categoryType", course.getCategoryType());
+                courseJson.put("published", course.isPublished());
 
                 courseArray.add(courseJson);
             }
@@ -217,6 +239,7 @@ public class CourseService extends BaseWebActionsService {
     @Override
     public OperationReturnObject switchActions(String action, JSONObject request) {
         return switch (action) {
+            case "publishCourse" -> publishCourse(request);
             case "getCourseById" -> getCourseById(request);
             case "getCoursesByCategoryType" -> getCoursesByCategoryType(request);
             case "getAllCourses" -> getAllCourses(request);
