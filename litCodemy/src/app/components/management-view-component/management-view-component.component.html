@@ -1,8 +1,6 @@
 <div class="p-6 space-y-4">
 
-  <p class="text-xl" >🧑‍💼 Management View Loaded!</p>
-
-  <div class=" mx-auto p-6 bg-white rounded shadow">
+  <div *ngIf="isAdmin()" class="mx-auto p-6 bg-white rounded shadow">
     <!-- Tab Header -->
     <div class="flex border-b border-gray-300 mb-6">
       <button
@@ -12,50 +10,16 @@
       >
         Course
       </button>
-      <button
-        class="px-4 py-2 text-sm font-medium"
-        [ngClass]="{ 'border-b-2 border-green-600 text-green-600': activeTab === 'topic' }"
-        (click)="setTab('topic')"
-      >
-        Topic
-      </button>
-      <button
-        class="px-4 py-2 text-sm font-medium"
-        [ngClass]="{ 'border-b-2 border-green-600 text-green-600': activeTab === 'subtopic' }"
-        (click)="setTab('subtopic')"
-      >
-        Subtopic
-      </button>
     </div>
   
     <!-- Tab Content -->
     <div *ngIf="activeTab === 'course'">
       <app-create-course></app-create-course>
     </div>
-    <div *ngIf="activeTab === 'topic'">
-      <app-create-topic></app-create-topic>
-    </div>
-    <div *ngIf="activeTab === 'subtopic'">
-      <app-create-subtopic></app-create-subtopic>
-    </div>
   </div>
 
-    <div>
-      <h2 class="text-xl font-semibold text-green-800">Installation for Windows</h2>
-      <p class="bg-green-100 text-green-800 p-2 rounded border-l-4 border-green-600 mt-2">
-        Create directories under the C:\ drive as follow:
-      </p>
-      <img src="assets/windows-folders.png" alt="Folder structure" class="my-4 w-full md:w-1/2 rounded border" />
-      <p class="text-red-600 text-sm">
-        When installing every software, make sure to install it in the right directory.
-      </p>
-      <p class="bg-green-100 text-green-800 p-2 rounded border-l-4 border-green-600">
-        Install Database: postgres with pgAdmin
-      </p>
-      <a class="text-blue-700 underline" href="#">Download: PostgreSQL & PgAdmin(version:9.6.24*)</a>
-    </div>
 
-    <div class="bg-white shadow rounded-lg p-6">
+    <div *ngIf="isUser()" class="bg-white shadow rounded-lg p-6">
 
       <!-- Active Courses Section -->
       <div class="mb-8">
@@ -65,26 +29,37 @@
             <tr>
               <th class="border border-gray-300 px-4 py-2">#</th>
               <th class="border border-gray-300 px-4 py-2">Course</th>
-              <th class="border border-gray-300 px-4 py-2">Topic Count</th>
-              <th class="border border-gray-300 px-4 py-2">Progress</th>
+              <th class="border border-gray-300 px-4 py-2">Enroll Date</th>
+              <th class="border border-gray-300 px-4 py-2">Status</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td class="border border-gray-300 px-4 py-2">1</td>
-              <td class="border border-gray-300 px-4 py-2">
-                <!-- <a href="#" class="text-blue-500 underline">Go to FSEU 1 Jan 2021 (Uganda)</a> -->
+          <tbody>     
+
+            <tr *ngFor="let enrolled of courses; let i = index">
+              <td class="border border-gray-300 px-4 py-2">{{ i + 1 }}</td>
+            
+              <td class="border border-gray-300 px-4 py-2 flex items-center gap-4">
+                <img
+                  *ngIf="enrolled.course.imageUrl"
+                  [src]="enrolled.course.imageUrl"
+                  alt="Course Image"
+                  class="w-10 h-10 object-cover rounded"
+                />
                 <a 
-                  [routerLink]="['/management/course', 'fseu-1-jan-2021']" 
+                  [routerLink]="['/management/course', enrolled.course.id]" 
                   class="text-blue-500 underline"
                 >
-                  Go to FSEU 1 Jan 2021 (Uganda)
+                  {{ enrolled.course.title }}
                 </a>
-
               </td>
-              <td class="border border-gray-300 px-4 py-2 text-center">20</td>
-              <td class="border border-gray-300 px-4 py-2 text-center">80%</td>
+            
+              <td class="border border-gray-300 px-4 py-2 text-center">{{enrolled.enrollmentDate}}</td>
+              <td class="border border-gray-300 px-4 py-2 text-center">
+                {{ enrolled.status }}
+              </td>
             </tr>
+            
+            
           </tbody>
         </table>
       </div>
@@ -115,90 +90,3 @@
     </div>
     
 </div>
-
-
-  <!-- <div class="table-container">
-    <table>
-      <thead style="position: sticky;top: 0;background-color: #f2f2f2;">
-         <tr style="font-size: 1.25em;font-weight: bold;font-family: Bernard MT Condensed;position: sticky;">
-          <th style="width:400px;padding: 15px;border-top-left-radius:10px;position: sticky;">Name</th>
-          <th style="width:125px;position: sticky;">Fitness</th>
-          <th style="width:125px;position: sticky;">Shooting</th>
-          <th style="width:125px;position: sticky;">Equipment</th>
-          <th style="width:125px;border-top-right-radius:10px;position: sticky;">Prof. Fit</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-          <td soldier_id="4842" style="padding:10px;width:400px">
-              <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112001</span><br>
-              <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Kyungu Wabanza Adolph</span></td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#d55d5d">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;34&nbsp;<img src="/media/training/images/x.png" width="25" height="25">
-              </div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;70&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:white">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;0&nbsp;</div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#d55d5d">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;33&nbsp;<img src="/media/training/images/x.png" width="25" height="25"></div>
-          </td>
-      </tr>
-      <tr>
-          <td soldier_id="4883" style="padding:10px;width:400px">
-              <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112042</span><br>
-              <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Abanga Bosali Glody</span></td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;84&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;87&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-      </tr>
-      <tr><td soldier_id="4884" style="padding:10px;width:400px">
-          <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112043</span><br>
-          <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Otapanya Manya</span>
-      </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;80&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;77&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">100&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-      </tr>
-      <tr>
-          <td soldier_id="4933" style="padding:10px;width:400px">
-              <span style="font-size:25px;display:inline-block;font-weight:bold;font-family: Bernard MT Condensed">112092</span><br>
-              <span style="font-size:23px;display:inline-block;font-family: URW DIN Cond, Regular ">Bamuseke Kabamusu</span>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;74&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#4dffc3">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;90&nbsp;<img src="/media/training/images/v.png" width="25" height="25"></div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:white">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;0&nbsp;</div>
-          </td>
-          <td style="width:100px;color:black;justify-content: center;align-items: center;text-align:center;padding: 10px;background-color:#d55d5d">
-              <div style="font-size:23px;font-weight:bold;font-family:Bernard MT Condensed;display:flex;align-items:center;">&nbsp;&nbsp;67&nbsp;<img src="/media/training/images/x.png" width="25" height="25"></div>
-          </td>
-      </tr>
-      </tbody>
-    </table>
-  </div> -->

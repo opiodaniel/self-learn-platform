@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
+
   private baseUrl = 'http://localhost:8000/api/course/create'; 
   private apiUrl = 'http://localhost:8000/api/v1/';
 
@@ -24,6 +25,33 @@ export class CourseService {
     return this.http.post<any>(this.apiUrl, body);
   }
 
+
+  enrollToCourse(courseId: number): Observable<any> {
+    const headers = this.getAuthHeaders();
+    const payload = {
+      SERVICE: 'Enrollment',
+      ACTION: 'enrollToCourse',
+      data: { courseId }
+    };
+  
+    return this.http.post<any>(this.apiUrl, payload, { headers });
+  }
+
+  checkEnrollment(courseId: number): Observable<{ alreadyEnrolled: boolean }> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.apiUrl, {
+      SERVICE: 'Enrollment',
+      ACTION: 'checkEnrollment',
+      data: { courseId }
+    }, { headers }).pipe(
+      map(response => ({
+        alreadyEnrolled: response.returnCode === 200 && response.returnObject?.alreadyEnrolled === true
+      }))
+    );
+  }
+  
+  
+
   getAllCourses(): Observable<any[]> {
     const requestBody = {
       SERVICE: 'Course',
@@ -34,10 +62,57 @@ export class CourseService {
     );
   }
 
-  getCourseById(courseId: number): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.get(`${this.baseUrl}/${courseId}`, { headers });
+  getCourseById(id: number): Observable<any> {
+    return this.http.post<any>(this.apiUrl, {
+      SERVICE: 'Course',
+      ACTION: 'getCourseById',
+      data: { courseId: id }
+    }).pipe(
+      map(response => response.returnObject) 
+    );
   }
+
+  getUserEnrolledCourses(): Observable<any[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.apiUrl, {
+      SERVICE: 'Enrollment',
+      ACTION: 'getUserEnrolledCourses'
+    }, { headers }).pipe(
+      map(response => response.returnObject) 
+    );
+  }
+  
+
+  createTopic(data: any): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.apiUrl, {
+      SERVICE: 'Topic',
+      ACTION: 'createTopic',
+      data: data
+    }, { headers }).pipe(map(res => res.returnObject));
+  }
+
+  getTopicsByCourseId(id: number): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.apiUrl, {
+      SERVICE: 'Topic',
+      ACTION: 'getCourseTopics',
+      data: { courseId: id }
+    }, { headers }).pipe(
+      map(response => response.returnObject) 
+    );
+  }
+
+  createSubTopic(data: any): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.apiUrl, {
+      SERVICE: 'SubTopic',
+      ACTION: 'createTopicSubTopic',
+      data: data
+    }, { headers }).pipe(map(res => res.returnObject));
+  }
+  
+  
 
 
   private getAuthHeaders(): HttpHeaders {

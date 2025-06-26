@@ -110,6 +110,9 @@ public enum AppDomains {
             UserPermissions.DELETE_PROPOSAL,
             UserPermissions.CREATE_MODERATOR
     )),
+    PROGRAMMER("PROGRAMMER", List.of(
+            UserPermissions.VIEW_DASHBOARD
+    )),
     FREELANCER("Freelancer", List.of(
             UserPermissions.VIEW_JOB,
             UserPermissions.VIEW_SKILL,

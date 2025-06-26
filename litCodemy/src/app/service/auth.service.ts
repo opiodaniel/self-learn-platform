@@ -128,46 +128,19 @@ export class AuthService {
     return decoded?.userId || null;
   }
 
+
+  getCurrentUserRole(): string | null {
+    const token = localStorage.getItem('authToken');
+    if (!token) return null;
+
+    try {
+      const decoded: any = jwtDecode(token);
+      // Adjust the property based on your token payload structure
+      return decoded.role || decoded.roles || null;
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return null;
+    }
+  }
+
 }
-
-// export class AuthService {
-
-//   private tokenKey = 'authToken';
-
-//   constructor() { }
-
-//   private http = inject(HttpClient);
-//   private apiUrl = 'http://localhost:8000/api/v1/auth'; 
-
-//   register(user: any): Observable<any> {
-//     return this.http.post(`${this.apiUrl}/register`, user);
-//   }
-
-//   login(user: any): Observable<any> {
-//     return this.http.post(`${this.apiUrl}/login`, user);
-//   }
-
-
-//   //  decode the token to get the username // npm install jwt-decode
-//   getCurrentUsername(): string | null {
-//     const token = localStorage.getItem('token');
-//     if (!token) return null;
-
-//     try {
-//       const decoded: any = jwtDecode(token);
-//       return decoded.sub || decoded.username || null; // Adjust based on your token structure
-//     } catch (error) {
-//       console.error('Invalid token:', error);
-//       return null;
-//     }
-//   }
-
-//   getCurrentUserId(): number | null {
-//     const token = localStorage.getItem('token');
-//     if (!token) return null;
-  
-//     const decoded: any = jwtDecode(token);
-//     return decoded?.userId || null;
-//   }
-
-// }

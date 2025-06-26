@@ -29,6 +29,7 @@ export class SidebarComponent {
     public userService: UserService
   ) {}
 
+
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
 
@@ -39,10 +40,12 @@ export class SidebarComponent {
 
     const user = this.authService.getCurrentUser();
     if (user) {
-      //console.log(user)
       this.userName = user.username;
       this.userRole = user.role;
-      this.profilePictureUrl = user.imageUrl || this.getDefaultProfilePicture();
+      //this.profilePictureUrl = user.imageUrl || this.getDefaultProfilePicture();
+      this.userService.getProfilePictureUrl().subscribe(url => {
+        this.profilePictureUrl = url;
+      });
     }
   }
 
@@ -52,10 +55,10 @@ export class SidebarComponent {
 
 
 
-  getDefaultProfilePicture(): string {
-    const id = Math.floor(Math.random() * 70) + 1;
-    return `https://i.pravatar.cc/150?img=${id}`;
-  }
+  // getDefaultProfilePicture(): string {
+  //   const id = Math.floor(Math.random() * 70) + 1;
+  //   return `https://i.pravatar.cc/150?img=${id}`;
+  // }
 
   logout() {
     this.authService.logout();

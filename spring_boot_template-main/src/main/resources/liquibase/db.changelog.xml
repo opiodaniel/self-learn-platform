@@ -11,5 +11,9 @@
     <include file="changes/C016_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
     <include file="changes/C0016_change_image_type_onCourse.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
     <include file="changes/C017_update_on_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/update_servespace_id_field_to_be_uniquefield.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C018_update_on_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C019_added_topic_to_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C020_added_subtopic_to_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
 
 </databaseChangeLog>

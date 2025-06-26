@@ -11,7 +11,9 @@
   </div>
    <!-- User Profile -->
    <div class="flex flex-col items-center p-6">
-     <img [src]="profilePictureUrl" alt="User Avatar" class="w-20 h-20 rounded-full border-4 border-green-700 mb-2" />
+     <!-- <img [src]="profilePictureUrl" alt="User Avatar" class="w-20 h-20 rounded-full border-4 border-green-700 mb-2" /> -->
+     <img [src]="profilePictureUrl" alt="User Avatar" class="w-20 h-20 rounded-full cursor-pointer border-2 border-green-600"/>
+
      <div class="text-white font-semibold text-lg">{{ userName }}</div>
      <div class="text-green-300 text-sm">{{ userRole }}</div>
    </div>

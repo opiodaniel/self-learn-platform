@@ -11,5 +11,6 @@ import com.ceres.project.models.jpa_helpers.enums.AppDomains;
  */
 public class Permisions {
     Permission ADMINISTRATOR = new Permission("ADMINISTRATOR", "Can administer the system", AppDomains.BACK_OFFICE, true);
+    Permission PROGRAMMER = new Permission("PROGRAMMER", "Can access dashboard", AppDomains.BACK_OFFICE, true);
     Permission ASSIGNS_PERMISSIONS = new Permission("ASSIGNS_PERMISSIONS", "Can Assign Permissions to roles", AppDomains.BACK_OFFICE, true);
 }

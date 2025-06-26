@@ -108,7 +108,8 @@ public class AuthService extends BaseWebActionsService {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setIsActive(true);
             user.setGenderPronoun(request.getGender_pronoun());
-            user.setRoleCode("ADMINISTRATOR");
+//            user.setRoleCode("ADMINISTRATOR");
+            user.setRoleCode("PROGRAMMER");
             user.setUsername(full_name);
 
             Optional<SystemRoleModel> roleCheck = roleRepository.findByRoleCode(request.getRole());
@@ -143,7 +144,8 @@ public class AuthService extends BaseWebActionsService {
             userForm.setFirst_name(data.getString("firstName").trim());
             userForm.setLast_name(data.getString("lastName").trim());
             userForm.setEmail(data.getString("email").trim());
-            userForm.setRole("ADMINISTRATOR");
+//            userForm.setRole("ADMINISTRATOR");
+            userForm.setRole("PROGRAMMER");
             userForm.setUsername(full_name);
             userForm.setPassword(data.getString("password"));
             if (!EnumUtils.isValidEnum(Genders.class, data.getString("gender"))) {

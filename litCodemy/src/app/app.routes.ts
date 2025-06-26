@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './components/layout/layout.component';
 import { RegisterComponent } from './auth-components/register/register.component';
 import { LoginComponent } from './auth-components/login/login.component';
 import { MainComponent } from './components/main/main.component';
@@ -34,6 +33,7 @@ export const routes: Routes = [
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'management/course/:id', component: CourseReadingMaterialsComponent },
-    {path: "register-to-course", component: RegisterToCourseComponent},
+    { path: 'register-to-course/:id', component: RegisterToCourseComponent }
+    
 
 ];

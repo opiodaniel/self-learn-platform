@@ -79,7 +79,6 @@ export class LoginComponent implements OnInit {
   this.authService.loginUser(credentials)
     .subscribe({
       next: (response) => {
-        console.log(response)
         var userToken = response.returnObject.access_token;
         if (userToken) {
           this.authService.login(userToken);

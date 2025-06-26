@@ -84,15 +84,15 @@ public class SetUp {
         });
         log.info("Permissions setup successfully");
         // Create the default admin role if not exists
-        Optional<SystemRoleModel> checkIfAdminRoleExists = roleRepository.findFirstByRoleCode("ADMINISTRATOR");
+        Optional<SystemRoleModel> checkIfAdminRoleExists = roleRepository.findFirstByRoleCode("PROGRAMMER");
         if (checkIfAdminRoleExists.isEmpty()){
             // create the role here
             var adminRole = SystemRoleModel.builder();
-            adminRole.roleName("Administrator");
+            adminRole.roleName("Programmer");
 
             if (Boolean.TRUE.equals(useDomains)) {
                 if (StringUtils.isBlank(adminRoleName)){
-                    adminRoleName = "ADMINISTRATOR";
+                    adminRoleName = "PROGRAMMER";
                 }
                 adminRole.roleCode(adminRoleName);
                 if (adminDomain == null){
@@ -104,10 +104,10 @@ public class SetUp {
             roleRepository.save(adminRole.build());
         }
         // perform the assignment of admin
-        Optional<SystemRolePermissionAssignmentModel> assignmentModel = permissionAssignmentRepository.findFirstByRoleCodeAndPermissionCode("ADMINISTRATOR", "ADMINISTRATOR");
+        Optional<SystemRolePermissionAssignmentModel> assignmentModel = permissionAssignmentRepository.findFirstByRoleCodeAndPermissionCode("PROGRAMMER", "PROGRAMMER");
         if (assignmentModel.isEmpty()){
             var assignment = SystemRolePermissionAssignmentModel.builder();
-            assignment.permissionCode("ADMINISTRATOR");
+            assignment.permissionCode("PROGRAMMER");
             assignment.roleCode(adminRoleName);
             permissionAssignmentRepository.save(assignment.build());
         }
@@ -125,7 +125,7 @@ public class SetUp {
             field.setAccessible(true);
             Permission perm = (Permission) field.get(obj);
             if (Boolean.TRUE.equals(perm.getShipWithAdmin())){
-                Optional<SystemRolePermissionAssignmentModel> assignmentModel = permissionAssignmentRepository.findFirstByRoleCodeAndPermissionCode("ADMINISTRATOR", perm.getCode());
+                Optional<SystemRolePermissionAssignmentModel> assignmentModel = permissionAssignmentRepository.findFirstByRoleCodeAndPermissionCode("PROGRAMMER", perm.getCode());
                 if (assignmentModel.isEmpty()){
                     var assignment = SystemRolePermissionAssignmentModel.builder();
                     assignment.permissionCode(perm.getCode());

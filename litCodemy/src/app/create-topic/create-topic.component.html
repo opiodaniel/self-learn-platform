@@ -1,1 +1,45 @@
-<p>create-topic works!</p>
+
+
+
+  <form [formGroup]="topicForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- 🔹 Topic Title -->
+    <div>
+      <label class="block font-semibold mb-1 text-sm text-gray-700">Topic Title</label>
+      <input
+        type="text"
+        formControlName="title"
+        class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-500"
+        placeholder="Enter topic title"
+      />
+      <div *ngIf="topicForm.get('title')?.invalid && topicForm.get('title')?.touched"
+           class="text-red-600 text-sm">Title is required.</div>
+    </div>
+  
+    <!-- 🔹 Topic Description -->
+    <div>
+      <label class="block font-semibold mb-1 text-sm text-gray-700">Description</label>
+      <textarea
+        formControlName="description"
+        class="w-full border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-500"
+        rows="4"
+        placeholder="Enter topic description"
+      ></textarea>
+      <div *ngIf="topicForm.get('description')?.invalid && topicForm.get('description')?.touched"
+           class="text-red-600 text-sm">Description is required.</div>
+    </div>
+  
+    <!-- 🔹 Submit Button -->
+    <button
+      type="submit"
+      [disabled]="topicForm.invalid"
+      class="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded shadow"
+    >
+      Create Topic
+    </button>
+  
+    <!-- 🔹 Messages -->
+    <div *ngIf="successMessage" class="text-green-600 mt-3">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="text-red-600 mt-3">{{ errorMessage }}</div>
+  </form>
+  
+  

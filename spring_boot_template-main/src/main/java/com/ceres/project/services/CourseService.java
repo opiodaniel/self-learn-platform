@@ -128,14 +128,13 @@ public class CourseService extends BaseWebActionsService {
     }
 
     public OperationReturnObject getCourseById(JSONObject request) {
-        requiresAuth();
 
         OperationReturnObject returnObject = new OperationReturnObject();
         try {
             JSONObject data = request.getJSONObject("data");
-            requires(List.of("id"), data);
+            requires(List.of("courseId"), data);
 
-            Long courseId = data.getLong("id");
+            Long courseId = data.getLong("courseId");
             Course course = courseRepository.findById(courseId)
                     .orElseThrow(() -> new NoSuchElementException("Course not found"));
 

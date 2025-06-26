@@ -11,6 +11,7 @@ import java.util.List;
 public enum DefaultRoles {
     ADMINISTRATOR("administrator", "ADMINISTRATOR", "The Administrator of the system", AppDomains.ALL, List.of(UserPermissions.values())),
     FREELANCER("freelancer", "FREELANCER", "A freelancer who enrols on the system for jobs", AppDomains.FREELANCER, AppDomains.FREELANCER.getPermissions()),
+    PROGRAMMER("programmer", "PROGRAMMER", "A programmer who enrols on the system for study", AppDomains.PROGRAMMER, AppDomains.PROGRAMMER.getPermissions()),
     HUMAN_RESOURCE("human resource", "HUMAN_RESOURCE", "In charge of human resource management", AppDomains.BACK_OFFICE, List.of(
             UserPermissions.VIEW_GRADING,
             UserPermissions.VIEW_ALL_GRADINGS,

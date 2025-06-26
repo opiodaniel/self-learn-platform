@@ -40,9 +40,9 @@ export class MainComponent implements OnInit {
       this.profilePictureUrl = url;
     });
 
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-    }
+    // if (!this.authService.isLoggedIn()) {
+    //   this.router.navigate(['/login']);
+    // }
 
     this.messageService.message$.subscribe(msg => {
       this.welcomeMessage = msg;

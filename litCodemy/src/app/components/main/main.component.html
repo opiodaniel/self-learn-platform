@@ -154,12 +154,14 @@
             <span>{{ course.studentsEnrolled }} Enrolled</span>
           </div>
         </div>       
-
-        <!-- Button -->
-        <button routerLink="register-to-course"
-                class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition-all">
+        
+        <button 
+          [routerLink]="['/register-to-course', course.id]"
+          class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition-all"
+        >
           Get Started
         </button>
+
 
         <!-- 💡 Hover Background Overlay -->
         <div class="absolute inset-0 bg-gradient-to-br from-green-50 via-transparent to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
