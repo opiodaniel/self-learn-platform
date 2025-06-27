@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LayoutComponent } from './layout.component';
+import { CreateSubtopicComponent } from './create-subtopic.component';
 
-describe('LayoutComponent', () => {
-  let component: LayoutComponent;
-  let fixture: ComponentFixture<LayoutComponent>;
+describe('CreateSubtopicComponent', () => {
+  let component: CreateSubtopicComponent;
+  let fixture: ComponentFixture<CreateSubtopicComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LayoutComponent]
+      imports: [CreateSubtopicComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(LayoutComponent);
+    fixture = TestBed.createComponent(CreateSubtopicComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

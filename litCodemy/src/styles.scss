@@ -9,3 +9,23 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+
+.prose {
+  @apply leading-relaxed;
+}
+
+.prose p {
+  @apply mb-1;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  @apply mt-4 mb-2;
+}
+
+.prose ul,
+.prose ol {
+  @apply my-1 ml-4;
+}

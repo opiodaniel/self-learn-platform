@@ -12,45 +12,69 @@
         <!-- Error Message -->
         <div *ngIf="errorMessage" class="rounded-md bg-red-100 text-red-800 px-4 py-3 text-sm mb-4">
           {{ errorMessage }}
-        </div>  
-
-        <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-5">
-          <!-- Username -->
-          <div>
-            <label for="username" class="block mb-2 text-sm font-medium text-green-800">Your Username</label>
-            <input type="text" formControlName="username" id="username"
-              class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm"
-              placeholder="comboni" required>
+        </div> 
+        
+        <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-6">
+          <!-- First Name & Last Name Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- First Name -->
+            <div>
+              <label for="firstName" class="block mb-2 text-sm font-medium text-green-800">First Name</label>
+              <input type="text" formControlName="firstName" id="firstName"
+                class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm"
+                placeholder="John" required>
+            </div>
+        
+            <!-- Last Name -->
+            <div>
+              <label for="lastName" class="block mb-2 text-sm font-medium text-green-800">Last Name</label>
+              <input type="text" formControlName="lastName" id="lastName"
+                class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm"
+                placeholder="Doe" required>
+            </div>
           </div>
-
-          <!-- Email -->
-          <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-green-800">Your Email</label>
-            <input type="email" formControlName="email" id="email"
-              class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm"
-              placeholder="name@company.com" required>
+        
+          <!-- Email & Password Row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Email -->
+            <div>
+              <label for="email" class="block mb-2 text-sm font-medium text-green-800">Your Email</label>
+              <input type="email" formControlName="email" id="email"
+                class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm"
+                placeholder="name@company.com" required>
+            </div>
+        
+            <!-- Password -->
+            <div>
+              <label for="password" class="block mb-2 text-sm font-medium text-green-800">Password</label>
+              <input type="password" formControlName="password" id="password"
+                class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm"
+                placeholder="••••••••" required>
+            </div>
           </div>
-
-          <!-- Password -->
+        
+          <!-- Gender -->
           <div>
-            <label for="password" class="block mb-2 text-sm font-medium text-green-800">Password</label>
-            <input type="password" formControlName="password" id="password"
-              class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm"
-              placeholder="••••••••" required>
+            <label for="gender" class="block mb-2 text-sm font-medium text-green-800">Gender</label>
+            <select formControlName="gender" id="gender"
+              class="block w-full rounded-md border border-green-400 bg-green-50 px-3 py-2 text-base text-green-900 placeholder-green-400 focus:border-green-600 focus:ring-1 focus:ring-green-600 sm:text-sm">
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
           </div>
-
+        
           <!-- Submit Button -->
           <button type="submit"
             class="w-full p-2 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-md font-semibold hover:from-green-700 hover:to-green-600 transition duration-150"
             [disabled]="registerForm.invalid">
             Create an account
           </button>
-
+        
           <!-- Login Link -->
           <p class="text-sm font-light text-green-700">
             Already have an account?
-            <a [routerLink]="'/login'"
-              class="font-medium text-green-600 hover:underline cursor-pointer">
+            <a [routerLink]="'/login'" class="font-medium text-green-600 hover:underline cursor-pointer">
               Login here
             </a>
           </p>

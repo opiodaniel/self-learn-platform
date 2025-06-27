@@ -34,11 +34,21 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) {}
 
+  // ngOnInit(): void {
+  //   this.registerForm = this.fb.group({
+  //     username: ['', Validators.required],
+  //     email: ['', [Validators.required, Validators.email]],
+  //     password: ['', Validators.required]
+  //   });
+  // }
+
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      gender: ['', Validators.required] // Should be one of enum values (e.g., MALE, FEMALE, OTHER)
     });
   }
 

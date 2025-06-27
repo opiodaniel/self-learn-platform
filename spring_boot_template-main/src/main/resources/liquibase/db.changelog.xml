@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd" context="project">
+    <include file="/changes/project_init.sql" relativeToChangelogFile="true"/>
+    <include file="/changes/using_added_gender_field_to_system_user_table.sql" relativeToChangelogFile="true"/>
+    <include file="/changes/add_role_id_field_to_system_user_table.sql" relativeToChangelogFile="true"/>
+    <include file="/changes/add_servespace_id_field_to_system_user_table.sql" relativeToChangelogFile="true"/>
+    <include file="changes/C016_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C0016_change_image_type_onCourse.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C017_update_on_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/update_servespace_id_field_to_be_uniquefield.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C018_update_on_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C019_added_topic_to_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C020_added_subtopic_to_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C021_new_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+
+</databaseChangeLog>

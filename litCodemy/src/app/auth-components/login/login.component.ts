@@ -18,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-login',
@@ -35,12 +36,13 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -54,24 +56,42 @@ export class LoginComponent implements OnInit {
 
     const credentials = this.loginForm.value;
 
-    this.authService.loginUser(credentials).subscribe({
-      next: res => {
-        const token = res?.result?.token;
-        console.log(res)
-        if (token) {
-          localStorage.setItem('authToken', token);
-            this.userService.getCurrentUser().subscribe(user => {
-            this.userService.setProfilePictureUrl(user.profilePicture);
-          });
-          this.router.navigate(['/']); // Navigate after storing token
+    // this.authService.loginUser(credentials).subscribe({
+    //   next: res => {
+    //     const token = res?.result?.token;
+    //     console.log(res)
+    //     if (token) {
+    //       localStorage.setItem('authToken', token);
+    //         this.userService.getCurrentUser().subscribe(user => {
+    //         this.userService.setProfilePictureUrl(user.profilePicture);
+    //       });
+    //       this.router.navigate(['/']); // Navigate after storing token
+    //     } else {
+    //       this.errorMessage = 'Sorry, wrong credentials. Please try again.';
+    //     }
+    //   },
+    //   error: err => {
+    //     console.error(err);
+    //     this.errorMessage = 'Sorry, wrong credentials. Please try again.';
+    //   }
+    // });
+
+  this.authService.loginUser(credentials)
+    .subscribe({
+      next: (response) => {
+        var userToken = response.returnObject.access_token;
+        if (userToken) {
+          this.authService.login(userToken);
+          this.messageService.setMessage(response.returnMessage);
+          this.router.navigate(['/']);
         } else {
-          this.errorMessage = 'Sorry, wrong credentials. Please try again.';
+          console.error('No token in response');
         }
       },
-      error: err => {
-        console.error(err);
-        this.errorMessage = 'Sorry, wrong credentials. Please try again.';
+      error: (err) => {
+        console.error('Login failed', err);
       }
     });
+
   }
 }

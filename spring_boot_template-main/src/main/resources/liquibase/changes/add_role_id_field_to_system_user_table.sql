@@ -1,0 +1,1 @@
+ALTER TABLE system_user ADD COLUMN role_id BIGINT NULL;;

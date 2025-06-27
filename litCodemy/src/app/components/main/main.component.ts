@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { Course, CourseResponseDTO } from '../../model/course-response-dto';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-main',
@@ -16,14 +17,21 @@ import { Course, CourseResponseDTO } from '../../model/course-response-dto';
 })
 export class MainComponent implements OnInit {
 
+  courses: any[] = [];
+
   isLoggedIn = false;
   dropdownOpen = false;
   profilePictureUrl: string = '';
+  welcomeMessage: string | null = null;
+
+  loading: boolean = false;
 
   constructor(
     public authService: AuthService,
     public router: Router,
     public userService: UserService,
+    private messageService: MessageService,
+    private courseService: CourseService
   ) {}
 
   ngOnInit(): void {
@@ -32,9 +40,21 @@ export class MainComponent implements OnInit {
       this.profilePictureUrl = url;
     });
 
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-    }
+    // if (!this.authService.isLoggedIn()) {
+    //   this.router.navigate(['/login']);
+    // }
+
+    this.messageService.message$.subscribe(msg => {
+      this.welcomeMessage = msg;
+      
+      // Optional: clear message after a few seconds
+      if (msg) {
+        setTimeout(() => this.messageService.clearMessage(), 5000);
+      }
+    });
+
+    this.loadCourses();
+
   }
     
 
@@ -48,164 +68,40 @@ export class MainComponent implements OnInit {
       }, 150);
     }
 
-  courses: Course[] = [
-    {
-      icon: 'assets/python.jpeg',
-      title: 'Python',
-      desc: 'Learn animation techniques to create stunning motion graphics.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
 
-    category: 'Web Dev',
-      isNew: true,
-    progress: 50
-    },
-    {
-      icon: 'assets/java.jpeg',
-      title: 'Java',
-      desc: 'Create beautiful, user-friendly interfaces for modern apps.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
+  // Getting all courses.
 
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/angular.jpeg',
-      title: 'Angular',
-      desc: 'Master lighting, focus, and composition in digital photography.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
+  loadCourses() {
+    this.loading = true;
+    this.courseService.getAllCourses().subscribe({
+      next: (data) => {
+        //console.log(data)
+        this.courses = (data || []).filter((course: any) => course.published === true);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load courses', err),
+        alert('Failed to load courses: ' + (err.error?.message || 'Unknown error'));
+      }
+    });
+  }
 
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/react.jpeg',
-      title: 'React',
-      desc: 'Understand and invest in cryptocurrencies with confidence.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
+  // Pagination variables
+  currentPage: number = 1;
+  pageSize: number = 8; // Courses per page
 
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/springboot.png',
-      title: 'Business',
-      desc: 'Step-by-step guide to building and scaling your business.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
+  get paginatedCourses(): any[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.courses.slice(start, start + this.pageSize);
+  }
 
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/django.png',
-      title: 'Django',
-      desc: 'Learn to drive traffic and convert leads using digital tools.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
+  get totalPages(): number {
+    return Math.ceil(this.courses.length / this.pageSize);
+  }
 
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/frontend.jpeg',
-      title: 'Frontend Development',
-      desc: 'Master HTML, CSS, and JavaScript with modern frameworks.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
-
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/backend.jpeg',
-      title: 'Backend Development',
-      desc: 'Build scalable APIs with Node, Spring Boot, and Django.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
-
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/icons/mobile.svg',
-      title: 'Mobile Apps',
-      desc: 'Create responsive mobile apps using Flutter & React Native.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
-
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/icons/data.svg',
-      title: 'Data Science',
-      desc: 'Work with Python, Pandas, and Machine Learning techniques.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
-
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/icons/ai.svg',
-      title: 'AI & ML',
-      desc: 'Dive into Artificial Intelligence with hands-on labs.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
-
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-    {
-      icon: 'assets/icons/devops.svg',
-      title: 'DevOps',
-      desc: 'Master CI/CD pipelines, Docker, and Kubernetes.',
-      upvotes: 120,
-      downvotes: 8,
-      comments: 45,
-      studentsEnrolled: 1200,
-
-    category: 'Web Dev',
-      isNew: false,
-    progress: 0
-    },
-  ];
+  goToPage(page: number) {
+    this.currentPage = page;
+  }
 
   // Generate random avatar ID for default profile image
   randomUserImageId(): number {
