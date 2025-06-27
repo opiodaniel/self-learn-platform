@@ -1,71 +1,101 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../../service/course.service';
 import { TopicService } from '../../service/topic.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-take-test',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './take-test.component.html',
   styleUrl: './take-test.component.scss'
 })
 export class TakeTestComponent implements OnInit {
-  topicId!: number;
-  test: any;
-  answersForm!: FormGroup;
-  submitting = false;
-  result: any = null;
+  @Input() topicId!: number;
+  @Output() submitted = new EventEmitter<void>();
 
-  constructor(
-    private route: ActivatedRoute,
-    private courseService: CourseService,
-    private topicService: TopicService,
-    private fb: FormBuilder
-  ) {}
+  testId!: number;
+  testTitle: string = '';
+  questions: any[] = [];
+  currentQuestionIndex = 0;
+  answers: any[] = [];
+  message = '';
+  loading = true;
 
-  ngOnInit(): void {
-    this.topicId = +this.route.snapshot.paramMap.get('topicId')!;
+  constructor(private topicService: TopicService) {}
+
+  ngOnInit() {
     this.loadTest();
   }
 
   loadTest() {
-    this.topicService.getTestByTopicId(this.topicId).subscribe({
-      next: (test) => {
-        this.test = test;
-        const group: any = {};
-        test.questions.forEach((q: any) => {
-          group[q.id] = [null]; // Initially no answer selected
-        });
-        this.answersForm = this.fb.group(group);
+    const data = {
+      topicId: this.topicId 
+    };
+    this.topicService.getTestAttempt(data).subscribe({
+      next: (res) => {
+        this.testId = res.testId;
+        this.testTitle = res.testTitle;
+        this.loadQuestions();
       },
       error: () => {
-        alert('Failed to load test.');
+        this.message = '❌ Test not found for this topic.';
+        this.loading = false;
       }
     });
   }
 
-  submit() {
-    if (!this.answersForm.valid) return;
-
-    this.submitting = true;
-    const submittedAnswers = Object.keys(this.answersForm.value).map(qId => ({
-      questionId: +qId,
-      selectedAnswerId: this.answersForm.value[qId]
-    }));
-
-    this.topicService.submitTest({
-      testId: this.test.id,
-      answers: submittedAnswers
-    }).subscribe({
+  loadQuestions() {
+    const data = {
+      testId: this.testId 
+    };
+    this.topicService.getQuestionsByTestId(data).subscribe({
       next: (res) => {
-        this.result = res;
-        this.submitting = false;
+        this.questions = res;
+        this.loading = false;
       },
       error: () => {
-        alert('Failed to submit test.');
-        this.submitting = false;
+        this.message = '❌ Failed to load questions.';
+        this.loading = false;
+      }
+    });
+  }
+
+  selectAnswer(questionId: number, answerId: number) {
+    const existing = this.answers.find(a => a.questionId === questionId);
+    if (existing) {
+      existing.selectedAnswerId = answerId;
+    } else {
+      this.answers.push({ questionId, selectedAnswerId: answerId });
+    }
+  }
+
+  nextQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
+    }
+  }
+
+  prevQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+    }
+  }
+
+  submit() {
+    const data = {
+      testId: this.testId,
+      answers: this.answers
+    };
+    this.topicService.submitTest(data).subscribe({
+      next: (res) => {
+        this.message = `✅ Test submitted. Score: ${res.score}%`;
+        setTimeout(() => this.submitted.emit(), 2500);
+      },
+      error: () => {
+        this.message = '❌ Submission failed.';
       }
     });
   }

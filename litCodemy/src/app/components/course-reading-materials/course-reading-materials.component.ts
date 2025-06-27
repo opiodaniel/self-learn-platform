@@ -9,12 +9,13 @@ import html from 'editorjs-html';
 import { CreateSubtopicComponent } from '../create-subtopic/create-subtopic.component';
 import { CreateTopicComponent } from '../create-topic/create-topic.component';
 import { CreateTopicTestComponent } from '../create-topic-test/create-topic-test.component';
+import { TakeTestComponent } from '../take-test/take-test.component';
 
 
 @Component({
   selector: 'app-course-reading-materials',
   standalone: true,
-  imports: [CommonModule, RouterModule, CreateTopicComponent, CreateSubtopicComponent, CreateTopicTestComponent],
+  imports: [CommonModule, RouterModule, CreateTopicComponent, CreateSubtopicComponent, CreateTopicTestComponent, TakeTestComponent],
   templateUrl: './course-reading-materials.component.html',
   styleUrl: './course-reading-materials.component.scss'
 })
@@ -42,6 +43,7 @@ export class CourseReadingMaterialsComponent {
   isTopicModalOpen = false;
   isSubtopicModalOpen = false;
   isTestModalOpen = false;
+  isTakeTestModalOpen = false;
   selectedTopicId: number | null = null;
 
 
@@ -226,19 +228,7 @@ loadTopics(courseId: number) {
     this.closeSubtopicModal();
   }
 
-
-  //-------------------
-
-  startTest(topicId: number): void {
-    // 🔸 For now, show mock data
-    console.log(`Start test for topic: ${topicId}`);
-    
-    // 🔸 In future, navigate to a test-taking component
-    this.router.navigate(['/take-test', topicId]);
-  }
-
-
-  // ----------TEST-------------  
+  // ----------Create TEST-------------  
 
   openTestModal(topicId: number) {
     this.selectedTopicId = topicId;
@@ -247,14 +237,31 @@ loadTopics(courseId: number) {
 
   closeTestModal() {
     this.isTestModalOpen = false;
-    const courseId = this.route.snapshot.paramMap.get('id');
-    if (courseId) {
-      this.loadCourseDetails(+courseId);
-    }
+    // const courseId = this.route.snapshot.paramMap.get('id');
+    // if (courseId) {
+    //   this.loadCourseDetails(+courseId);
+    // }
   }
 
   onTestCreated(event: any) {
     this.closeTestModal();
+  }
+
+  //----------Take Test-------------
+
+  openTakeTestModal(topicId: number) {
+    console.log('🧪 Opening test modal for topic:', topicId);
+    this.selectedTopicId = topicId;
+    this.isTakeTestModalOpen = true;
+  }
+
+  closeTakeTestModal() {
+    this.isTakeTestModalOpen = false;
+  }
+
+  onTestSubmitted() {
+    this.closeTakeTestModal();
+    // Optionally reload progress or show success toast
   }
 
 

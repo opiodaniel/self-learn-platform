@@ -55,12 +55,44 @@ export class TopicService {
 
 
   getTestByTopicId(topicId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${topicId}`);
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.baseUrl, {
+      SERVICE: 'Test',
+      ACTION: 'createTopicTest'
+    }, { headers }).pipe(map(res => res.returnObject));
+
+  }
+
+
+  getTestAttempt(data: any) {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.baseUrl, {
+      SERVICE: 'Test',
+      ACTION: 'getTestAttempt',
+      data: data
+    }, { headers }).pipe(map(res => res.returnObject));
   }
   
-  submitTest(payload: any): Observable<any> {
-    return this.http.post('/api/tests/submit', { data: payload });
+  getQuestionsByTestId(data: any) {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.baseUrl, {
+      SERVICE: 'Test',
+      ACTION: 'getQuestionByTestId',
+      data: data
+    }, { headers }).pipe(map(res => res.returnObject));
   }
+  
+  submitTest(data: any) {
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.baseUrl, {
+      SERVICE: 'SubmitTest',
+      ACTION: 'submitTest',
+      data: data
+    }, { headers }).pipe(map(res => res.returnObject));
+  }
+  
+  
+
   
 
   private getAuthHeaders(): HttpHeaders {
