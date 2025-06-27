@@ -225,4 +225,13 @@ loadTopics(courseId: number) {
   }
 
 
+  startTest(topicId: number): void {
+    // 🔸 For now, show mock data
+    console.log(`Start test for topic: ${topicId}`);
+    
+    // 🔸 In future, navigate to a test-taking component
+    this.router.navigate(['/take-test', topicId]);
+  }
+  
+
 }
