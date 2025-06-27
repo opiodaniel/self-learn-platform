@@ -1,0 +1,71 @@
+
+    <div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg space-y-6">
+  
+      <h2 class="text-xl font-bold text-green-700">Create Topic Test</h2>
+  
+      <!-- 📝 Test Title -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Test Title</label>
+        <input [(ngModel)]="testTitle" class="w-full border rounded px-3 py-2 mt-1" placeholder="Enter test title" />
+      </div>
+  
+      <!-- ❓ Slide-based Question -->
+      <div *ngIf="questions.length > 0">
+        <div class="border p-4 rounded bg-gray-50 space-y-4">
+          <h3 class="font-semibold">Question {{ currentIndex + 1 }} of {{ questions.length }}</h3>
+  
+          <textarea [(ngModel)]="questions[currentIndex].content"
+            class="w-full border px-2 py-1 rounded" rows="2"
+            placeholder="Enter question text"></textarea>
+  
+          <div *ngFor="let opt of questions[currentIndex].answerOptions; let j = index"
+               class="flex items-center gap-2 mb-2">
+            <input [(ngModel)]="opt.answerText"
+                   class="flex-1 border px-2 py-1 rounded" placeholder="Answer option" />
+            <label class="flex items-center gap-1">
+              <input type="checkbox" [(ngModel)]="opt.isCorrect" />
+              <span class="text-sm text-gray-700">Correct</span>
+            </label>
+            <button (click)="removeAnswerOption(currentIndex, j)"
+                    class="text-red-600 text-xs hover:underline">Remove</button>
+          </div>
+  
+          <button (click)="addAnswerOption(currentIndex)"
+                  class="text-green-700 text-sm hover:underline">+ Add Option</button>
+        </div>
+  
+        <!-- 🔁 Navigation Buttons -->
+        <div class="flex justify-between mt-4">
+          <button (click)="prevQuestion()" [disabled]="currentIndex === 0"
+                  class="bg-gray-200 px-3 py-1 rounded text-sm font-medium hover:bg-gray-300">
+            ⬅ Previous
+          </button>
+  
+          <button (click)="nextQuestion()" [disabled]="currentIndex === questions.length - 1"
+                  class="bg-gray-200 px-3 py-1 rounded text-sm font-medium hover:bg-gray-300">
+            Next ➡
+          </button>
+        </div>
+      </div>
+  
+      <!-- ➕ Add New Question -->
+      <button (click)="addQuestion()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow">
+        + Add New Question
+      </button>
+  
+      <!-- 🚀 Submit Test -->
+      <div>
+        <button (click)="submitTest()" class="bg-green-700 text-white px-5 py-2 mt-4 rounded font-semibold shadow">
+          Submit Test
+        </button>
+        <div *ngIf="message" class="mt-2 text-sm text-green-700">{{ message }}</div>
+      </div>
+  
+    </div>
+
+
+
+
+
+  
+  

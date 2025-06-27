@@ -4,7 +4,7 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import CodeTool from '@editorjs/code';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CourseService } from '../service/course.service';
+import { CourseService } from '../../service/course.service';
 
 @Component({
   selector: 'app-create-subtopic',

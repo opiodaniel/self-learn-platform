@@ -9,9 +9,7 @@ import { UpdatePasswordComponent } from './pages/update-password/update-password
 import { UpdateProfileComponent } from './pages/update-profile/update-profile.component';
 import { RegisterToCourseComponent } from './components/register-to-course/register-to-course.component';
 import { DashboardContentComponent } from './components/dashboard-content/dashboard-content.component';
-import { CreateCourseComponent } from './create-course/create-course.component';
-import { CreateTopicComponent } from './create-topic/create-topic.component';
-import { CreateSubtopicComponent } from './create-subtopic/create-subtopic.component';
+import { CreateTopicTestComponent } from './components/create-topic-test/create-topic-test.component';
 
 export const routes: Routes = [
 
@@ -33,7 +31,10 @@ export const routes: Routes = [
     },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'management/course/:id', component: CourseReadingMaterialsComponent },
-    { path: 'register-to-course/:id', component: RegisterToCourseComponent }
+    { path: 'register-to-course/:id', component: RegisterToCourseComponent },
+
+
+   // { path: 'admin/create-topic-test/:id', component: CreateTopicTestComponent }
     
 
 ];

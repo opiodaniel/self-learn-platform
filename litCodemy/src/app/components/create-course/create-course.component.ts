@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CourseService } from '../service/course.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { CourseService } from '../../service/course.service';
 
 @Component({
   selector: 'app-create-course',

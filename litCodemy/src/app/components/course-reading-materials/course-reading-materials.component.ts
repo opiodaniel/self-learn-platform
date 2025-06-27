@@ -5,15 +5,16 @@ import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
 import { CourseService } from '../../service/course.service';
 import { ActivatedRoute } from '@angular/router';
-import { CreateTopicComponent } from '../../create-topic/create-topic.component';
-import { CreateSubtopicComponent } from '../../create-subtopic/create-subtopic.component';
 import html from 'editorjs-html';
+import { CreateSubtopicComponent } from '../create-subtopic/create-subtopic.component';
+import { CreateTopicComponent } from '../create-topic/create-topic.component';
+import { CreateTopicTestComponent } from '../create-topic-test/create-topic-test.component';
 
 
 @Component({
   selector: 'app-course-reading-materials',
   standalone: true,
-  imports: [CommonModule, RouterModule, CreateTopicComponent, CreateSubtopicComponent],
+  imports: [CommonModule, RouterModule, CreateTopicComponent, CreateSubtopicComponent, CreateTopicTestComponent],
   templateUrl: './course-reading-materials.component.html',
   styleUrl: './course-reading-materials.component.scss'
 })
@@ -40,6 +41,7 @@ export class CourseReadingMaterialsComponent {
 
   isTopicModalOpen = false;
   isSubtopicModalOpen = false;
+  isTestModalOpen = false;
   selectedTopicId: number | null = null;
 
 
@@ -225,6 +227,8 @@ loadTopics(courseId: number) {
   }
 
 
+  //-------------------
+
   startTest(topicId: number): void {
     // 🔸 For now, show mock data
     console.log(`Start test for topic: ${topicId}`);
@@ -232,6 +236,26 @@ loadTopics(courseId: number) {
     // 🔸 In future, navigate to a test-taking component
     this.router.navigate(['/take-test', topicId]);
   }
-  
+
+
+  // ----------TEST-------------  
+
+  openTestModal(topicId: number) {
+    this.selectedTopicId = topicId;
+    this.isTestModalOpen = true;
+  }
+
+  closeTestModal() {
+    this.isTestModalOpen = false;
+    const courseId = this.route.snapshot.paramMap.get('id');
+    if (courseId) {
+      this.loadCourseDetails(+courseId);
+    }
+  }
+
+  onTestCreated(event: any) {
+    this.closeTestModal();
+  }
+
 
 }

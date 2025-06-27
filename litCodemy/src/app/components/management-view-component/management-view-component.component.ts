@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CreateCourseComponent } from '../../create-course/create-course.component';
-import { CreateTopicComponent } from '../../create-topic/create-topic.component';
-import { CreateSubtopicComponent } from '../../create-subtopic/create-subtopic.component';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
 import { CourseService } from '../../service/course.service';
+import { CreateCourseComponent } from '../create-course/create-course.component';
+import { CreateSubtopicComponent } from '../create-subtopic/create-subtopic.component';
+import { CreateTopicComponent } from '../create-topic/create-topic.component';
 
 @Component({
   selector: 'app-management-view-component',
