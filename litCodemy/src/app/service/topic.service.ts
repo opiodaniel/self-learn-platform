@@ -39,9 +39,7 @@ export class TopicService {
   }
 
 
-  // createTopicTest(payload: any): Observable<any> {
-  //   return this.http.post(`${this.baseUrl}`, payload); // Adjust endpoint as needed
-  // }
+  // ----------------------------
 
   createTopicTest(data: any): Observable<any> {
     const headers = this.getAuthHeaders();
@@ -90,6 +88,23 @@ export class TopicService {
       data: data
     }, { headers }).pipe(map(res => res.returnObject));
   }
+
+
+  getTopicProgress(data: any): Observable<any> {
+
+    const headers = this.getAuthHeaders();
+    return this.http.post<any>(this.baseUrl, {
+      SERVICE: 'SubmitTest',
+      ACTION: 'getTopicProgress',
+      data: data
+    }, { headers }).pipe(map(res => res.returnObject));
+
+
+    // return this.http.post<any>(`${this.apiUrl}/get-topic-progress`, {
+    //   data: { topicId }
+    // });
+  }
+  
   
   
 

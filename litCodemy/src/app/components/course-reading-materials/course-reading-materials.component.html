@@ -104,7 +104,6 @@
 
                 <!-- ➕ Create Test Button (Admin only) -->
                 <div class="px-2 py-2 flex gap-2">
-
                   <!-- 🟢 Take Test Button -->
                   <button 
                   (click)="openTakeTestModal(section.id)" 
@@ -121,6 +120,22 @@
                     </button>
                   </div>
                 </div>
+
+                <!-- 🟢 Topic Progress Bar -->
+                <div *ngIf="topicProgressMap[section.id]" class="px-2 mt-1">
+                  <div class="h-3 relative max-w-xl rounded-full overflow-hidden bg-gray-200">
+                    <div 
+                      class="h-full bg-green-500 transition-all duration-300"
+                      [style.width.%]="topicProgressMap[section.id].progressPercentage"
+                    ></div>
+                  </div>
+                  <p class="text-xs mt-1 text-green-700 font-medium">
+                    Progress: {{ topicProgressMap[section.id].progressPercentage }}%
+                    <span *ngIf="topicProgressMap[section.id].completed">✅</span>
+                    <span *ngIf="!topicProgressMap[section.id].completed">⏳</span>
+                  </p>
+                </div>
+
               
               </div>
             </div>

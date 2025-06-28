@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -106,6 +107,42 @@ public class SubmitTestService extends BaseWebActionsService {
         return returnObj;
     }
 
+    public OperationReturnObject getTopicProgress(JSONObject request) {
+        requiresAuth();
+        OperationReturnObject returnObj = new OperationReturnObject();
+
+        try {
+            requires("data", request);
+            JSONObject data = request.getJSONObject("data");
+
+            String userId = authenticatedUser().getServpaceId();
+            Integer topicId = data.getIntValue("topicId");
+
+            System.out.println("topicId==========" + topicId);
+
+            Optional<UserTopicProgress> progressOpt = userTopicProgressRepository
+                    .findByUserIdAndCourseTopicId(userId, topicId);
+
+            if (progressOpt.isEmpty()) {
+                returnObj.setReturnCodeAndReturnMessage(404, "Progress not found.");
+                return returnObj;
+            }
+
+            UserTopicProgress progress = progressOpt.get();
+
+            JSONObject result = new JSONObject();
+            result.put("progressPercentage", progress.getProgressPercentage());
+            result.put("completed", progress.isCompleted());
+            result.put("completedAt", progress.getCompletedAt());
+
+            returnObj.setReturnObject(result);
+            returnObj.setReturnCodeAndReturnMessage(200, "Progress retrieved successfully.");
+        } catch (Exception e) {
+            returnObj.setReturnCodeAndReturnMessage(500, "Error retrieving progress: " + e.getMessage());
+        }
+
+        return returnObj;
+    }
 
     public OperationReturnObject updateTopicProgress(String userId, Integer topicId, double score) {
         OperationReturnObject returnObj = new OperationReturnObject();
@@ -146,6 +183,7 @@ public class SubmitTestService extends BaseWebActionsService {
     public OperationReturnObject switchActions(String action, JSONObject request) {
         return switch (action) {
             case "submitTest" -> submitTest(request);
+            case "getTopicProgress" -> getTopicProgress(request);
             default -> throw new IllegalArgumentException("Unknown action: " + action);
         };
     }

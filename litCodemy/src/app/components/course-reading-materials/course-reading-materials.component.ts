@@ -10,6 +10,7 @@ import { CreateSubtopicComponent } from '../create-subtopic/create-subtopic.comp
 import { CreateTopicComponent } from '../create-topic/create-topic.component';
 import { CreateTopicTestComponent } from '../create-topic-test/create-topic-test.component';
 import { TakeTestComponent } from '../take-test/take-test.component';
+import { TopicService } from '../../service/topic.service';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class CourseReadingMaterialsComponent {
       private route: ActivatedRoute,
       public userService: UserService,
       public courseService: CourseService,
+      public topicService: TopicService
   ) {} 
 
 
@@ -74,25 +76,29 @@ export class CourseReadingMaterialsComponent {
   }  
 
 
-loadCourseDetails(id: number) {
-  this.courseService.getCourseById(id).subscribe(course => {
-    this.course = course;
-    //console.log("Course", this.course)
-    this.loadTopics(course.id);
-  });
-}
+  loadCourseDetails(id: number) {
+    this.courseService.getCourseById(id).subscribe(course => {
+      this.course = course;
+      //console.log("Course", this.course)
+      this.loadTopics(course.id);
+    });
+  }
 
-loadTopics(courseId: number) {
-  this.courseService.getTopicsByCourseId(courseId).subscribe((topics: any[]) => {
-    //console.log("Topics", topics)
-    this.sections = topics.map((topic: any) => ({
-      id: topic.id,
-      title: topic.title,
-      expanded: false,
-      subsections: topic.subtopics || []
-    }));
-  });
-}
+  loadTopics(courseId: number) {
+    this.courseService.getTopicsByCourseId(courseId).subscribe((topics: any[]) => {
+      //console.log("Topics", topics)
+      this.sections = topics.map((topic: any) => ({
+        id: topic.id,
+        title: topic.title,
+        expanded: false,
+        subsections: topic.subtopics || []
+      }));
+
+      const topicIds = topics.map(t => t.id);
+      this.loadProgressForAllTopics(topicIds); // 🚀 Load progress per topic
+
+    });
+  }
 
   selectSubsection(sectionId: number, sub: any) {
     this.selectedSubsection = { sectionId, subsection: sub };
@@ -134,7 +140,7 @@ loadTopics(courseId: number) {
   // Toggle Section/Main-Tabs
   toggleSection(id: number) {
     const section = this.sections.find((s: { id: number; }) => s.id === id);
-  
+
     if (section) {
       const isCurrentlyExpanded = section.expanded;
   
@@ -165,8 +171,7 @@ loadTopics(courseId: number) {
 
     const courseId = this.route.snapshot.paramMap.get('id');
     if (courseId) {
-      this.loadCourseDetails(+courseId);
-    }
+      this.loadCourseDetails(+courseId);    }
 
     this.userRole = this.authService.getCurrentUserRole();
   } 
@@ -263,6 +268,35 @@ loadTopics(courseId: number) {
     this.closeTakeTestModal();
     // Optionally reload progress or show success toast
   }
+
+
+  // ==== TOPIC PROGRESS ======
+
+  topicProgressMap: { [topicId: number]: { progressPercentage: number, completed: boolean } } = {};
+  loadProgressForAllTopics(sectionIds: number[]) {
+    sectionIds.forEach((id) => {
+      const data = {
+        topicId: id
+      };
+      this.topicService.getTopicProgress(data).subscribe({
+        next: (res) => {
+          this.topicProgressMap[id] = {
+            progressPercentage: res.progressPercentage,
+            completed: res.completed
+          };
+        },
+        error: () => {
+          // Optionally handle missing or failed progress
+          this.topicProgressMap[id] = {
+            progressPercentage: 0,
+            completed: false
+          };
+        }
+      });
+    });
+  }
+
+
 
 
 }
