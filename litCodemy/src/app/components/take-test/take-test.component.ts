@@ -89,14 +89,22 @@ export class TakeTestComponent implements OnInit {
       testId: this.testId,
       answers: this.answers
     };
+  
     this.topicService.submitTest(data).subscribe({
       next: (res) => {
-        this.message = `✅ Test submitted. Score: ${res.score}%`;
-        setTimeout(() => this.submitted.emit(), 2500);
+        const score = res.score;
+        if (score >= 50) {
+          this.message = `✅ Test submitted. Score: ${score}%. Great job!`;
+          setTimeout(() => this.submitted.emit(), 2500);
+        } else {
+          this.message = `❌ Score: ${score}%. Please re-do the test to proceed to the next topic.`;
+          setTimeout(() => this.submitted.emit(), 2500);
+        }
       },
       error: () => {
         this.message = '❌ Submission failed.';
       }
     });
   }
+  
 }

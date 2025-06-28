@@ -16,5 +16,6 @@
     <include file="changes/C019_added_topic_to_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
     <include file="changes/C020_added_subtopic_to_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
     <include file="changes/C021_new_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
+    <include file="changes/C022_added_userprogress_to_elearning_tables.sql" relativeToChangelogFile="true" author="thedarkarchitect" />
 
 </databaseChangeLog>
