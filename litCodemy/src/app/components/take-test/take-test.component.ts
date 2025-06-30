@@ -95,10 +95,10 @@ export class TakeTestComponent implements OnInit {
         const score = res.score;
         if (score >= 50) {
           this.message = `✅ Test submitted. Score: ${score}%. Great job!`;
-          setTimeout(() => this.submitted.emit(), 2500);
+          setTimeout(() => this.submitted.emit(), 3000);
         } else {
           this.message = `❌ Score: ${score}%. Please re-do the test to proceed to the next topic.`;
-          setTimeout(() => this.submitted.emit(), 2500);
+          setTimeout(() => this.submitted.emit(), 3000);
         }
       },
       error: () => {

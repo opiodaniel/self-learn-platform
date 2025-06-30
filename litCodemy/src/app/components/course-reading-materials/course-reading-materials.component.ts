@@ -267,6 +267,11 @@ export class CourseReadingMaterialsComponent {
   onTestSubmitted() {
     this.closeTakeTestModal();
     // Optionally reload progress or show success toast
+    const courseId = this.route.snapshot.paramMap.get('id');
+    if (courseId) {
+      this.loadTopics(+courseId);
+    }
+   
   }
 
 

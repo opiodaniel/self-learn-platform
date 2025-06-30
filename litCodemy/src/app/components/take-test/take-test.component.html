@@ -43,10 +43,23 @@
     Submit Test
   </button>
 
-  <div *ngIf="message" class="mt-2 text-green-600 text-sm">{{ message }}</div>
+  <!-- <div *ngIf="message" class="mt-2 text-green-600 text-sm">{{ message }}</div> -->
 </div>
 
 <div *ngIf="!loading && questions.length === 0 && !message">
   <p class="text-sm text-gray-600">No questions found for this test.</p>
 </div>
+
+<!-- ✅ Bottom-right floating message -->
+<div 
+  *ngIf="message" 
+  class="fixed bottom-4 right-4 bg-white border border-gray-300 shadow-lg px-4 py-2 rounded text-sm font-medium z-50"
+  [ngClass]="{
+    'text-green-700 border-green-400': message.startsWith('✅'),
+    'text-red-700 border-red-400': message.startsWith('❌')
+  }"
+>
+  {{ message }}
+</div>
+
 
