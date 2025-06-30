@@ -37,7 +37,7 @@
           </div>
 
           <!-- 🟢 Add Section Button -->
-          <button 
+          <button *ngIf="isAdmin()"
           class="bg-green-700 text-white px-3 py-1 mb-2 rounded w-full" 
           (click)="openTopicModal()"
           >
@@ -57,9 +57,9 @@
                     'bg-green-700 text-white': section.id === activeSectionId,
                     'hover:bg-green-700 text-green-200': section.id !== activeSectionId
                   }"
-                >
+                >   
                   <!-- 🔹 Left: Section Title -->
-                  <span class="font-semibold">{{ section.title }}</span>
+                  <span class="font-semibold">{{ section.title }}</span>                 
 
                   <!-- 🔹 Right: Section ID + Add Subtopic Button -->
                   <div class="flex items-center gap-2">
@@ -81,6 +81,26 @@
                   </div>
                 </div>
               </div> 
+
+              <!-- 🟢 Topic Progress Bar -->
+    <div *ngIf="section.expanded && topicProgressMap[section.id]" class="px-2 mt-2">
+      <div class="h-3 relative max-w-xl rounded-full overflow-hidden bg-gray-200">
+        <div 
+          class="h-full transition-all duration-300"
+          [ngClass]="{
+            'bg-green-500': topicProgressMap[section.id].progressPercentage >= 50,
+            'bg-red-500': topicProgressMap[section.id].progressPercentage < 50
+          }"
+          [style.width.%]="topicProgressMap[section.id].progressPercentage"
+        ></div>
+      </div>
+      <p class="text-xs mt-1 text-gray-100 font-medium">
+        Score: {{ topicProgressMap[section.id].progressPercentage }}%
+        <span *ngIf="topicProgressMap[section.id].completed">✅ Completed</span>
+        <span *ngIf="!topicProgressMap[section.id].completed">⏳ Not Passed</span>
+      </p>
+    </div>
+
               
               <div 
                 class="subsection-container"
@@ -119,33 +139,12 @@
                       Create Test
                     </button>
                   </div>
-                </div>
-
-               <!-- 🟢 Topic Progress Bar -->
-              <div *ngIf="topicProgressMap[section.id]" class="px-2 mt-1">
-                <div class="h-3 relative max-w-xl rounded-full overflow-hidden bg-gray-200">
-                  <div 
-                    class="h-full transition-all duration-300"
-                    [ngClass]="{
-                      'bg-green-500': topicProgressMap[section.id].progressPercentage >= 50,
-                      'bg-red-500': topicProgressMap[section.id].progressPercentage < 50
-                    }"
-                    [style.width.%]="topicProgressMap[section.id].progressPercentage"
-                  ></div>
-                </div>
-
-                <p class="text-xs mt-1 text-white-700 font-medium">
-                  Progress: {{ topicProgressMap[section.id].progressPercentage }}%
-                  <span *ngIf="topicProgressMap[section.id].completed">✅</span>
-                  <span *ngIf="!topicProgressMap[section.id].completed">⏳</span>
-                </p>
-              </div>
-              
+                </div>   
               </div>
             </div>
           </div>
   
-          <button class="bg-green-700 text-white px-3 py-1 mt-4 rounded w-full">Edit test questions</button>
+          <button *ngIf="isAdmin()" class="bg-green-700 text-white px-3 py-1 mt-4 rounded w-full">Edit test questions</button>
         </div>
       </div>
   
